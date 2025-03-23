@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "ES2022", // Modern JavaScript features
+    "module": "Node16", // Use native ES modules
+    "moduleResolution": "node16", // Use Node.js 16+ module resolution
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Better compatibility with ES modules
+    "skipLibCheck": true, // Skip type-checking for library files
+    "forceConsistentCasingInFileNames": true, // Ensure consistent file casing
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+
+    /* Strict Type-Checking Options */
+    "noImplicitAny": true, // Error on implicit `any` types
+    "strictNullChecks": true, // Enable strict null checks
+    "strictFunctionTypes": true, // Strict checking of function types
+    "strictBindCallApply": true, // Strict checking of `bind`, `call`, and `apply`
+    "strictPropertyInitialization": true, // Ensure class properties are initialized
+    "noImplicitThis": true, // Error on implicit `this` types
+    "alwaysStrict": true, // Parse in strict mode and emit "use strict"
+
+    /* Additional Checks */
+    "noImplicitReturns": true, // Error if not all code paths return a value
+    "noFallthroughCasesInSwitch": true, // Error on fallthrough in switch cases
+
+    /* Emit Options */
+    "noEmit": true // Do not emit JavaScript files
+  },
+  "include": ["src/**/*"], // Include all files in the src directory
+  "exclude": ["node_modules"] // Exclude node_modules
+}

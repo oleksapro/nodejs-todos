@@ -1,0 +1,7 @@
+PATCH http://localhost:3000/tasks/1
+
+{
+    "title": "Read Book",
+    "description": "...",
+    "completed": false
+}

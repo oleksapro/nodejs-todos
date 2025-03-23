@@ -134,3 +134,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Chatting with GPT
+.learn
+
+# sqlite3
+*.db
