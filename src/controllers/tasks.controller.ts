@@ -8,21 +8,7 @@ import type {
   PostTaskPayload,
   UpdateTaskPayload,
 } from "../repositories/task.repository.ts";
-
-const handleError = (res: Response, err: Error) => {
-  if (err.cause === "not-found") {
-    res.writeHead(HTTP_STATUS.notFound, {
-      "Content-Type": "application/json",
-    });
-    res.end(JSON.stringify({ error: "Task not found" }));
-    return;
-  }
-
-  res.writeHead(HTTP_STATUS.serverError, {
-    "Content-Type": "application/json",
-  });
-  res.end(JSON.stringify({ ...err, message: "Something went wrong" }));
-};
+import { handleError } from "../utils/http.ts";
 
 export const getTasks = (req: IncomingMessage, res: Response) => {
   repository.getTasks((err, tasks) => {
