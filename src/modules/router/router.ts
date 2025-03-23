@@ -1,39 +1,8 @@
 import { IncomingMessage } from "node:http";
 
-import type { Route, RouteParams, Response } from "./types.ts";
-
-export const HTTP_STATUS = {
-  success: 200,
-  notFound: 404,
-  serverError: 500,
-};
-
-const matchPath = (routePath: string, pathname: string) => {
-  const routeParts = routePath.split("/");
-  const pathParts = pathname.split("/");
-
-  if (routeParts.length !== pathParts.length) {
-    return { match: false, params: {} };
-  }
-
-  const params: RouteParams = {};
-
-  for (let i = 0; i < routeParts.length; i++) {
-    const routePart = routeParts[i];
-    const pathPart = pathParts[i];
-
-    if (routePart.startsWith(":")) {
-      // Dynamic parameter (e.g., :id)
-      const paramName = routePart.slice(1);
-      params[paramName] = pathPart;
-    } else if (routePart !== pathPart) {
-      // Static path mismatch
-      return { match: false, params: {} };
-    }
-  }
-
-  return { match: true, params };
-};
+import type { Route, Response } from "./types.ts";
+import { HTTP_STATUS } from "./const.ts";
+import { matchPath } from "./utils/matchPath.ts";
 
 const parseBody = (req: IncomingMessage, callback: (body: any) => void) => {
   let body = "";
