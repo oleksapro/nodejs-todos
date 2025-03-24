@@ -13,14 +13,16 @@
     "node": "23.10.0"
   },
   "scripts": {
-    "start": "node ./src/server.ts",
-    "dev": "node --watch ./src/server.ts | pino-pretty",
+    "prod": "NODE_ENV=production node ./src/server.ts",
+    "dev": "NODE_ENV=development node ./src/server.ts",
+    "watch": "NODE_ENV=development node --watch ./src/server.ts | pino-pretty",
     "types": "tsc",
     "types:watch": "tsc --watch",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "pino": "^9.6.0",
     "sqlite3": "^5.1.7"
   },

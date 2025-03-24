@@ -28,6 +28,6 @@
     /* Emit Options */
     "noEmit": true // Do not emit JavaScript files
   },
-  "include": ["src/**/*"], // Include all files in the src directory
+  "include": ["src"], // Include all files in the src directory
   "exclude": ["node_modules"] // Exclude node_modules
 }

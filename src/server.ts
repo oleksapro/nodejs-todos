@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 
-import { PORT } from "./const.ts";
+import { config } from "./config.ts";
 import { router } from "./modules/router/router.ts";
 import { routes } from "./routes/routes.ts";
 import { logger } from "./services/logger.ts";
@@ -8,7 +8,7 @@ import { logger } from "./services/logger.ts";
 export const server = createServer(router(routes));
 
 process.on("uncaughtException", (err) => {
-  logger.error("Uncaught Exception:", err);
+  logger.error(err, "Uncaught Exception:");
 
   server.close(() => {
     logger.info("Server closed due to uncaught exception");
@@ -16,8 +16,8 @@ process.on("uncaughtException", (err) => {
   });
 });
 
-process.on("unhandledRejection", (reason, promise) => {
-  logger.error("Unhandled Rejection at:", promise, "Reason:", reason);
+process.on("unhandledRejection", (reason) => {
+  logger.error(reason, "Unhandled Rejection at:");
 
   server.close(() => {
     logger.info("Server closed due to unhandled rejection");
@@ -25,6 +25,6 @@ process.on("unhandledRejection", (reason, promise) => {
   });
 });
 
-server.listen(PORT, () => {
-  logger.info(`Server is running on port ${PORT}`);
+server.listen(config.port, () => {
+  logger.info(`Server is running on port ${config.port}`);
 });
