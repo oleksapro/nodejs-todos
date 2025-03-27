@@ -10,7 +10,7 @@ import type {
 } from "../repositories/task.repository.ts";
 import { handleError } from "../utils/http.ts";
 
-export const getTasks = (req: IncomingMessage, res: Response) => {
+export const getTasks = (_req: IncomingMessage, res: Response) => {
   repository.getTasks((err, tasks) => {
     if (err) {
       return handleError(res, err);
