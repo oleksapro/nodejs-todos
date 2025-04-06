@@ -12,21 +12,39 @@
     }
   ],
   "paths": {
-    "/tasks": {
-      "get": {
-        "summary": "Get all tasks",
+    "/users": {
+      "post": {
+        "summary": "Create a new user",
         "tags": [
-          "Tasks"
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserPayloadDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shared-tasks": {
+      "get": {
+        "summary": "Get all shared tasks",
+        "tags": [
+          "Shared Tasks"
         ],
         "responses": {
           "200": {
-            "description": "List of tasks",
+            "description": "List of shared tasks",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Task"
+                    "$ref": "#/components/schemas/TaskDto"
                   }
                 }
               }
@@ -35,27 +53,27 @@
         }
       },
       "post": {
-        "summary": "Create a new task",
+        "summary": "Create a new shared task",
         "tags": [
-          "Tasks"
+          "Shared Tasks"
         ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Task"
+                "$ref": "#/components/schemas/TaskDto"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "The created task",
+            "description": "The created shared task",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Task"
+                  "$ref": "#/components/schemas/TaskDto"
                 }
               }
             }
@@ -63,11 +81,11 @@
         }
       }
     },
-    "/tasks/{id}": {
+    "/shared-tasks/{id}": {
       "get": {
-        "summary": "Get a task by ID",
+        "summary": "Get a shared task by ID",
         "tags": [
-          "Tasks"
+          "Shared Tasks"
         ],
         "parameters": [
           {
@@ -81,11 +99,11 @@
         ],
         "responses": {
           "200": {
-            "description": "The requested task",
+            "description": "The requested shared task",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Task"
+                  "$ref": "#/components/schemas/TaskDto"
                 }
               }
             }
@@ -96,7 +114,7 @@
   },
   "components": {
     "schemas": {
-      "Task": {
+      "TaskDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -114,6 +132,39 @@
           "completed": {
             "type": "boolean",
             "example": false
+          }
+        }
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "example": "user@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "abcd",
+            "nullable": true
+          }
+        }
+      },
+      "CreateUserPayloadDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "abcd",
+            "nullable": true
           }
         }
       }

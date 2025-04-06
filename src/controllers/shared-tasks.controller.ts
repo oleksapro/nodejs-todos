@@ -3,11 +3,11 @@ import type { IncomingMessage } from "node:http";
 import { HTTP_STATUS, type RequestContext } from "../modules/router/index.ts";
 import { type Response } from "../modules/router/index.ts";
 
-import * as repository from "../repositories/task.repository.ts";
+import * as repository from "../repositories/shared-task.repository.ts";
 import type {
-  PostTaskPayload,
+  CreateTaskPayload,
   UpdateTaskPayload,
-} from "../repositories/task.repository.ts";
+} from "../repositories/shared-task.repository.ts";
 import { handleError } from "../utils/http.ts";
 
 export const getTasks = (_req: IncomingMessage, res: Response) => {
@@ -40,6 +40,25 @@ export const getTask = (
   });
 };
 
+export const createTask = (
+  _req: IncomingMessage,
+  res: Response,
+  { body }: RequestContext,
+) => {
+  const payload = body as CreateTaskPayload;
+
+  repository.createTask(payload, (err, task) => {
+    if (err) {
+      return handleError(res, err);
+    }
+
+    res.writeHead(HTTP_STATUS.created, {
+      "Content-Type": "application/json",
+    });
+    res.end(JSON.stringify({ task: task }));
+  });
+};
+
 export const updateTask = (
   _req: IncomingMessage,
   res: Response,
@@ -56,25 +75,6 @@ export const updateTask = (
       "Content-Type": "application/json",
     });
     res.end(JSON.stringify({ task }));
-  });
-};
-
-export const postTask = (
-  _req: IncomingMessage,
-  res: Response,
-  { body }: RequestContext,
-) => {
-  const payload = body as PostTaskPayload;
-
-  repository.postTask(payload, (err, task) => {
-    if (err) {
-      return handleError(res, err);
-    }
-
-    res.writeHead(HTTP_STATUS.success, {
-      "Content-Type": "application/json",
-    });
-    res.end(JSON.stringify({ task: task }));
   });
 };
 

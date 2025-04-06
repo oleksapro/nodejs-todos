@@ -13,5 +13,13 @@ export const handleError = (res: Response, err: Error) => {
   res.writeHead(HTTP_STATUS.serverError, {
     "Content-Type": "application/json",
   });
-  res.end(JSON.stringify({ ...err, message: "Something went wrong" }));
+
+  const { message, ...restErrorProps } = err;
+
+  res.end(
+    JSON.stringify({
+      ...restErrorProps,
+      message: message || "Something went wrong",
+    }),
+  );
 };

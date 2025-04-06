@@ -22,6 +22,8 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "pino": "^9.6.0",
     "sqlite3": "^5.1.7",
