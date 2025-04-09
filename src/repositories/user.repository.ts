@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { db, TABLES } from "../db.ts";
 import type { UserSensitive, User } from "../entities/User.ts";
 
-function omitSensitiveProps(user: UserSensitive): User {
+export function omitSensitiveUserProps(user: UserSensitive): User {
   const { password, ...otherUserProps } = user;
 
   return otherUserProps;
@@ -12,14 +12,48 @@ function omitSensitiveProps(user: UserSensitive): User {
 export const getUsers = (
   callback: (err: Error | null, users: User[]) => void,
 ) => {
-  db.all<User>(`SELECT * FROM ${TABLES.USERS}`, callback);
+  db.all<UserSensitive>(`SELECT * FROM ${TABLES.USERS}`, function (err, users) {
+    callback(err, users.map(omitSensitiveUserProps));
+  });
 };
 
 export const getUser = (
   id: string,
   callback: (err: Error | null, user: User) => void,
 ) => {
-  db.get<User>(`SELECT * FROM ${TABLES.USERS} WHERE id = ?`, [id], callback);
+  db.get<UserSensitive>(
+    `SELECT * FROM ${TABLES.USERS} WHERE id = ?`,
+    [id],
+    function (err, user) {
+      callback(err, omitSensitiveUserProps(user));
+    },
+  );
+};
+
+export const getUserByEmail = (
+  email: string,
+  callback: (err: Error | null, user: User) => void,
+) => {
+  db.get<UserSensitive>(
+    `SELECT * FROM ${TABLES.USERS} WHERE email = ?`,
+    [email],
+    function (err, user) {
+      callback(err, omitSensitiveUserProps(user));
+    },
+  );
+};
+
+export const getUserSensitiveByEmail = (
+  email: string,
+  callback: (err: Error | null, user: UserSensitive) => void,
+) => {
+  db.get<UserSensitive>(
+    `SELECT * FROM ${TABLES.USERS} WHERE email = ?`,
+    [email],
+    function (err, user) {
+      callback(err, user);
+    },
+  );
 };
 
 export type CreateUserPayload = Pick<UserSensitive, "email" | "password">;
@@ -49,7 +83,7 @@ export const createUser = (
           `SELECT * FROM ${TABLES.USERS} WHERE id = ?`,
           [id],
           function (err, user) {
-            callback(err, omitSensitiveProps(user));
+            callback(err, omitSensitiveUserProps(user));
           },
         );
       },

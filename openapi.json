@@ -12,9 +12,9 @@
     }
   ],
   "paths": {
-    "/users": {
+    "/users/register": {
       "post": {
-        "summary": "Create a new user",
+        "summary": "Register a new user",
         "tags": [
           "Users"
         ],
@@ -24,6 +24,24 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateUserPayloadDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/signin": {
+      "post": {
+        "summary": "Signin a new user",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SigninUserPayloadDto"
               }
             }
           }
@@ -110,6 +128,87 @@
           }
         }
       }
+    },
+    "/tasks": {
+      "get": {
+        "summary": "Get all tasks",
+        "tags": [
+          "Tasks"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tasks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new task",
+        "tags": [
+          "Tasks"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "summary": "Get a task by ID",
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -155,6 +254,20 @@
         }
       },
       "CreateUserPayloadDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "abcd",
+            "nullable": true
+          }
+        }
+      },
+      "SigninUserPayloadDto": {
         "type": "object",
         "properties": {
           "email": {

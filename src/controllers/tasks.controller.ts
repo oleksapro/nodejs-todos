@@ -1,15 +1,18 @@
-import type { IncomingMessage } from "node:http";
-import { HTTP_STATUS, type RequestContext } from "../modules/router/index.ts";
+import {
+  HTTP_STATUS,
+  type RequestContext,
+  type RequestMod,
+} from "../modules/router/index.ts";
 import { type ResponseMod } from "../modules/router/index.ts";
 
-import * as repository from "../repositories/shared-task.repository.ts";
+import * as repository from "../repositories/task.repository.ts";
 import type {
   CreateTaskPayload,
   UpdateTaskPayload,
-} from "../repositories/shared-task.repository.ts";
+} from "../repositories/task.repository.ts";
 import { handleError } from "../utils/http.ts";
 
-export const getTasks = (_req: IncomingMessage, res: ResponseMod) => {
+export const getTasks = (_req: RequestMod, res: ResponseMod) => {
   repository.getTasks((err, tasks) => {
     if (err) {
       return handleError(res, err);
@@ -23,7 +26,7 @@ export const getTasks = (_req: IncomingMessage, res: ResponseMod) => {
 };
 
 export const getTask = (
-  _req: IncomingMessage,
+  _req: RequestMod,
   res: ResponseMod,
   { params }: RequestContext,
 ) => {
@@ -40,7 +43,7 @@ export const getTask = (
 };
 
 export const createTask = (
-  _req: IncomingMessage,
+  _req: RequestMod,
   res: ResponseMod,
   { body }: RequestContext,
 ) => {
@@ -59,7 +62,7 @@ export const createTask = (
 };
 
 export const updateTask = (
-  _req: IncomingMessage,
+  _req: RequestMod,
   res: ResponseMod,
   { params, body }: RequestContext,
 ) => {
@@ -78,7 +81,7 @@ export const updateTask = (
 };
 
 export const deleteTask = (
-  _req: IncomingMessage,
+  _req: RequestMod,
   res: ResponseMod,
   { params }: RequestContext,
 ) => {

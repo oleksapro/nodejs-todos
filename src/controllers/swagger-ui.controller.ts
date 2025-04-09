@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import swaggerUI from "swagger-ui-dist";
 
-import type { Response } from "../modules/router/types.ts";
+import type { ResponseMod } from "../modules/router/types.ts";
 import { handleError } from "../utils/http.ts";
 
 const { SwaggerUIBundle } = swaggerUI;
@@ -33,12 +33,12 @@ const swaggerHtml = `
 </html>
 `;
 
-export const getHtml = (_req: IncomingMessage, res: Response) => {
+export const getHtml = (_req: IncomingMessage, res: ResponseMod) => {
   res.writeHead(200, { "Content-Type": "text/html" });
   res.end(swaggerHtml);
 };
 
-export const getOpenapiJson = (_req: IncomingMessage, res: Response) => {
+export const getOpenapiJson = (_req: IncomingMessage, res: ResponseMod) => {
   fs.readFile(path.resolve("./openapi.json"), (err, spec) => {
     if (err) {
       return handleError(res, err);
@@ -49,7 +49,7 @@ export const getOpenapiJson = (_req: IncomingMessage, res: Response) => {
   });
 };
 
-export const getCss = (_req: IncomingMessage, res: Response) => {
+export const getCss = (_req: IncomingMessage, res: ResponseMod) => {
   fs.readFile(
     path.join(path.resolve("./node_modules/swagger-ui-dist/swagger-ui.css")),
     (err, css) => {
@@ -66,7 +66,7 @@ export const getCss = (_req: IncomingMessage, res: Response) => {
   );
 };
 
-export const getJS = (_req: IncomingMessage, res: Response) => {
+export const getJS = (_req: IncomingMessage, res: ResponseMod) => {
   fs.readFile(
     path.join(
       path.resolve("./node_modules/swagger-ui-dist/swagger-ui-bundle.js"),

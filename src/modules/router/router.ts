@@ -1,6 +1,6 @@
 import { IncomingMessage } from "node:http";
 
-import type { Route, Response } from "./types.ts";
+import type { Route, ResponseMod, RequestMod } from "./types.ts";
 import { HTTP_STATUS } from "./const.ts";
 import { matchPath } from "./utils/matchPath.ts";
 
@@ -15,7 +15,7 @@ const parseBody = (req: IncomingMessage, callback: (body: any) => void) => {
 };
 
 export const router = (routes: Route[]) => {
-  return (req: IncomingMessage, res: Response) => {
+  return (req: IncomingMessage, res: ResponseMod) => {
     const url = new URL(req.url!, `http://${req.headers.host}`);
     const pathname = url.pathname;
     const queryParams = Object.fromEntries(url.searchParams.entries());

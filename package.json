@@ -25,6 +25,7 @@
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
+    "jsonwebtoken": "^9.0.2",
     "pino": "^9.6.0",
     "sqlite3": "^5.1.7",
     "swagger-ui-dist": "^5.20.2"
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@swc/jest": "^0.2.37",
     "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.11",
     "@types/sqlite3": "^3.1.11",
     "@types/supertest": "^6.0.3",

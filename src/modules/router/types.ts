@@ -2,8 +2,11 @@ import { IncomingMessage, ServerResponse } from "node:http";
 
 export type HttpMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
-export type Response = ServerResponse<IncomingMessage> & {
+export type ResponseMod = ServerResponse<IncomingMessage> & {
   req: IncomingMessage;
+};
+export type RequestMod = IncomingMessage & {
+  context: { user?: Record<string, unknown> };
 };
 
 export type RouteParams = Record<string, string>;
@@ -17,7 +20,7 @@ export type RequestContext = {
 
 export type Handler = (
   req: IncomingMessage,
-  res: Response,
+  res: ResponseMod,
   context: RequestContext,
 ) => void;
 
