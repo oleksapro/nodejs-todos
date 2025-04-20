@@ -27,6 +27,7 @@ const swaggerHtml = `
         SwaggerUIBundle.presets.apis,
         SwaggerUIBundle.SwaggerUIStandalonePreset
       ],
+      persistAuthorization: true
     });
   </script>
 </body>

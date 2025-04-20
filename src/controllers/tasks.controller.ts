@@ -12,12 +12,14 @@ import type {
 } from "../repositories/task.repository.ts";
 import { handleError, ResError } from "../utils/http.ts";
 
-export type TaskDto = Omit<Task, "userId">;
+export type TaskDto = Omit<Task, "userId" | "completed"> & {
+  completed?: boolean;
+};
 
 export const convertToDto = (task: Task): TaskDto => {
-  const { userId, ...taskDto } = task;
+  const { userId, completed, ...taskDto } = task;
 
-  return taskDto;
+  return { ...taskDto, completed: Boolean(completed) };
 };
 
 const getTasks = (req: RequestMod, res: ResponseMod) => {

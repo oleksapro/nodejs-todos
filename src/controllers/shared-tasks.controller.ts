@@ -1,15 +1,26 @@
 import type { IncomingMessage } from "node:http";
+
 import { HTTP_STATUS, type RequestContext } from "../modules/router/index.ts";
 import { type ResponseMod } from "../modules/router/index.ts";
-
 import * as repository from "../repositories/shared-task.repository.ts";
 import type {
   CreateTaskPayload,
   UpdateTaskPayload,
 } from "../repositories/shared-task.repository.ts";
-import { handleError } from "../utils/http.ts";
+import { handleError, ResError } from "../utils/http.ts";
+import type { SharedTask } from "../entities/SharedTask.ts";
 
-export const getTasks = (_req: IncomingMessage, res: ResponseMod) => {
+export type SharedTaskDto = Omit<SharedTask, "completed"> & {
+  completed?: boolean;
+};
+
+export const convertToDto = (task: SharedTask): SharedTaskDto => {
+  const { completed, ...taskDto } = task;
+
+  return { ...taskDto, completed: Boolean(completed) };
+};
+
+const getTasks = (_req: IncomingMessage, res: ResponseMod) => {
   repository.getTasks((err, tasks) => {
     if (err) {
       return handleError(res, err);
@@ -18,11 +29,11 @@ export const getTasks = (_req: IncomingMessage, res: ResponseMod) => {
     res.writeHead(HTTP_STATUS.success, {
       "Content-Type": "application/json",
     });
-    res.end(JSON.stringify({ tasks: tasks }));
+    res.end(JSON.stringify({ tasks: tasks.map(convertToDto) }));
   });
 };
 
-export const getTask = (
+const getTask = (
   _req: IncomingMessage,
   res: ResponseMod,
   { params }: RequestContext,
@@ -35,11 +46,11 @@ export const getTask = (
     res.writeHead(HTTP_STATUS.success, {
       "Content-Type": "application/json",
     });
-    res.end(JSON.stringify({ task: task }));
+    res.end(JSON.stringify({ task: convertToDto(task) }));
   });
 };
 
-export const createTask = (
+const createTask = (
   _req: IncomingMessage,
   res: ResponseMod,
   { body }: RequestContext,
@@ -51,14 +62,18 @@ export const createTask = (
       return handleError(res, err);
     }
 
+    if (!task) {
+      return handleError(res, new ResError({ cause: "not-found" }));
+    }
+
     res.writeHead(HTTP_STATUS.created, {
       "Content-Type": "application/json",
     });
-    res.end(JSON.stringify({ task: task }));
+    res.end(JSON.stringify({ task: convertToDto(task) }));
   });
 };
 
-export const updateTask = (
+const updateTask = (
   _req: IncomingMessage,
   res: ResponseMod,
   { params, body }: RequestContext,
@@ -70,14 +85,18 @@ export const updateTask = (
       return handleError(res, err);
     }
 
+    if (!task) {
+      return handleError(res, new ResError({ cause: "not-found" }));
+    }
+
     res.writeHead(HTTP_STATUS.success, {
       "Content-Type": "application/json",
     });
-    res.end(JSON.stringify({ task }));
+    res.end(JSON.stringify({ task: convertToDto(task) }));
   });
 };
 
-export const deleteTask = (
+const deleteTask = (
   _req: IncomingMessage,
   res: ResponseMod,
   { params }: RequestContext,
@@ -92,4 +111,12 @@ export const deleteTask = (
     });
     res.end(JSON.stringify({ message: "Deleted" }));
   });
+};
+
+export const sharedTasksController = {
+  getTasks,
+  getTask,
+  createTask,
+  updateTask,
+  deleteTask,
 };

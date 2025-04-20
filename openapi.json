@@ -23,7 +23,24 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserPayloadDto"
+                "$ref": "#/components/schemas/UsersRegisterPayloadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Registered user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/UserDto"
+                    }
+                  }
+                }
               }
             }
           }
@@ -41,7 +58,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SigninUserPayloadDto"
+                "$ref": "#/components/schemas/UsersSignInPayloadDto"
               }
             }
           }
@@ -52,7 +69,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SigninUserResDto"
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "abcd.abcd.abcd"
+                    }
+                  }
                 }
               }
             }
@@ -72,9 +95,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskDto"
+                  "type": "object",
+                  "properties": {
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SharedTaskDto"
+                      }
+                    }
                   }
                 }
               }
@@ -92,7 +120,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateTaskPayloadDto"
+                "$ref": "#/components/schemas/SharedTasksCreatePayloadDto"
               }
             }
           }
@@ -103,7 +131,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateTaskResDto"
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/SharedTaskDto"
+                    }
+                  }
                 }
               }
             }
@@ -133,7 +166,78 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskDto"
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/SharedTaskDto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a shared task",
+        "tags": [
+          "Shared Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "task": {
+                    "$ref": "#/components/schemas/SharedTaskDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated shared task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/SharedTaskDto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResDto"
                 }
               }
             }
@@ -153,9 +257,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TaskDto"
+                  "type": "object",
+                  "properties": {
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TaskDto"
+                      }
+                    }
                   }
                 }
               }
@@ -173,7 +282,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateTaskPayloadDto"
+                "$ref": "#/components/schemas/TasksCreatePayloadDto"
               }
             }
           }
@@ -184,7 +293,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateTaskResDto"
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/TaskDto"
+                    }
+                  }
                 }
               }
             }
@@ -214,7 +328,73 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskDto"
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/TaskDto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a task",
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TasksCreatePayloadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "$ref": "#/components/schemas/TaskDto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResDto"
                 }
               }
             }
@@ -225,9 +405,13 @@
   },
   "components": {
     "schemas": {
-      "CreateTaskPayloadDto": {
+      "SharedTaskDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
           "title": {
             "type": "string",
             "example": "Learn Node.js"
@@ -239,15 +423,6 @@
           "completed": {
             "type": "boolean",
             "example": false
-          }
-        }
-      },
-      "CreateTaskResDto": {
-        "type": "object",
-        "properties": {
-          "task": {
-            "type": "object",
-            "$ref": "#/components/schemas/TaskDto"
           }
         }
       },
@@ -291,7 +466,15 @@
           }
         }
       },
-      "CreateUserPayloadDto": {
+      "ErrorResDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "UsersRegisterPayloadDto": {
         "type": "object",
         "properties": {
           "email": {
@@ -305,7 +488,7 @@
           }
         }
       },
-      "SigninUserPayloadDto": {
+      "UsersSignInPayloadDto": {
         "type": "object",
         "properties": {
           "email": {
@@ -319,12 +502,37 @@
           }
         }
       },
-      "SigninUserResDto": {
+      "SharedTasksCreatePayloadDto": {
         "type": "object",
         "properties": {
-          "token": {
+          "title": {
             "type": "string",
-            "example": "abcd.abcd.abcd"
+            "example": "Learn Node.js"
+          },
+          "description": {
+            "type": "string",
+            "example": "Build a CRUD API"
+          },
+          "completed": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "TasksCreatePayloadDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Learn Node.js"
+          },
+          "description": {
+            "type": "string",
+            "example": "Build a CRUD API"
+          },
+          "completed": {
+            "type": "boolean",
+            "example": false
           }
         }
       }
