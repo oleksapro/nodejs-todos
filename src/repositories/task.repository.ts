@@ -1,10 +1,22 @@
 import { db, TABLES } from "../db.ts";
 import type { Task } from "../entities/Task.ts";
+import { ResError } from "../utils/http.ts";
 
 export const getTasks = (
   callback: (err: Error | null, tasks: Task[]) => void,
 ) => {
   db.all<Task>(`SELECT * FROM ${TABLES.TASKS}`, callback);
+};
+
+export const getTasksByUserId = (
+  userId: string,
+  callback: (err: Error | null, tasks: Task[]) => void,
+) => {
+  db.all<Task>(
+    `SELECT * FROM ${TABLES.TASKS} WHERE userId = ?`,
+    [userId],
+    callback,
+  );
 };
 
 export const getTask = (
@@ -20,12 +32,13 @@ export type CreateTaskPayload = Pick<
 >;
 
 export const createTask = (
+  userId: string,
   payload: CreateTaskPayload,
   callback: (err: Error | null, task?: Task) => void,
 ) => {
   db.run(
-    `INSERT INTO ${TABLES.TASKS} (title, description) VALUES (?, ?)`,
-    [payload.title, payload.description],
+    `INSERT INTO ${TABLES.TASKS} (title, description, userId) VALUES (?, ?, ?)`,
+    [payload.title, payload.description, userId],
     async function (err) {
       if (err) {
         callback(err);
@@ -64,7 +77,7 @@ export const updateTask = (
       }
 
       if (this.changes === 0) {
-        callback(new Error("Not found", { cause: "not-found" }));
+        callback(new ResError({ cause: "not-found" }));
         return;
       }
 
@@ -88,7 +101,7 @@ export const deleteTask = (
     }
 
     if (this.changes === 0) {
-      callback(new Error("Not found", { cause: "not-found" }));
+      callback(new ResError({ cause: "not-found" }));
       return;
     }
 

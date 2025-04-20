@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 
 import { db, TABLES } from "../db.ts";
 import type { UserSensitive, User } from "../entities/User.ts";
+import { ResError } from "../utils/http.ts";
 
 export function omitSensitiveUserProps(user: UserSensitive): User {
   const { password, ...otherUserProps } = user;
@@ -110,7 +111,7 @@ export const updateUser = (
       }
 
       if (this.changes === 0) {
-        callback(new Error("Not found", { cause: "not-found" }));
+        callback(new ResError({ cause: "not-found" }));
         return;
       }
 
@@ -134,7 +135,7 @@ export const deleteUser = (
     }
 
     if (this.changes === 0) {
-      callback(new Error("Not found", { cause: "not-found" }));
+      callback(new ResError({ cause: "not-found" }));
       return;
     }
 

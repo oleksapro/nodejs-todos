@@ -1,17 +1,18 @@
 import { db, TABLES } from "../db.ts";
-import type { Task } from "../entities/Task.ts";
+import type { SharedTask } from "../entities/SharedTask.ts";
+import { ResError } from "../utils/http.ts";
 
 export const getTasks = (
-  callback: (err: Error | null, tasks: Task[]) => void,
+  callback: (err: Error | null, tasks: SharedTask[]) => void,
 ) => {
-  db.all<Task>(`SELECT * FROM ${TABLES.SHARED_TASKS}`, callback);
+  db.all<SharedTask>(`SELECT * FROM ${TABLES.SHARED_TASKS}`, callback);
 };
 
 export const getTask = (
   id: string,
-  callback: (err: Error | null, task: Task) => void,
+  callback: (err: Error | null, task: SharedTask) => void,
 ) => {
-  db.get<Task>(
+  db.get<SharedTask>(
     `SELECT * FROM ${TABLES.SHARED_TASKS} WHERE id = ?`,
     [id],
     callback,
@@ -19,13 +20,13 @@ export const getTask = (
 };
 
 export type CreateTaskPayload = Pick<
-  Task,
+  SharedTask,
   "title" | "description" | "completed"
 >;
 
 export const createTask = (
   payload: CreateTaskPayload,
-  callback: (err: Error | null, task?: Task) => void,
+  callback: (err: Error | null, task?: SharedTask) => void,
 ) => {
   db.run(
     `INSERT INTO ${TABLES.SHARED_TASKS} (title, description) VALUES (?, ?)`,
@@ -38,7 +39,7 @@ export const createTask = (
 
       const id = this.lastID;
 
-      db.get<Task>(
+      db.get<SharedTask>(
         `SELECT * FROM ${TABLES.SHARED_TASKS} WHERE id = ?`,
         [id],
         callback,
@@ -48,13 +49,13 @@ export const createTask = (
 };
 
 export type UpdateTaskPayload = Partial<
-  Pick<Task, "title" | "description" | "completed">
+  Pick<SharedTask, "title" | "description" | "completed">
 >;
 
 export const updateTask = (
   id: string,
   payload: UpdateTaskPayload,
-  callback: (err: Error | null, task?: Task) => void,
+  callback: (err: Error | null, task?: SharedTask) => void,
 ) => {
   db.run(
     `UPDATE ${TABLES.SHARED_TASKS} 
@@ -68,11 +69,11 @@ export const updateTask = (
       }
 
       if (this.changes === 0) {
-        callback(new Error("Not found", { cause: "not-found" }));
+        callback(new ResError({ cause: "not-found" }));
         return;
       }
 
-      db.get<Task>(
+      db.get<SharedTask>(
         `SELECT * FROM ${TABLES.SHARED_TASKS} WHERE id = ?`,
         [id],
         callback,
@@ -95,7 +96,7 @@ export const deleteTask = (
       }
 
       if (this.changes === 0) {
-        callback(new Error("Not found", { cause: "not-found" }));
+        callback(new ResError({ cause: "not-found" }));
         return;
       }
 

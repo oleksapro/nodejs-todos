@@ -37,6 +37,8 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     description TEXT,
-    completed BOOLEAN DEFAULT false
+    completed BOOLEAN DEFAULT false,
+    userId INTEGER NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(id)
   );
 `);

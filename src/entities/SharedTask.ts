@@ -1,7 +1,6 @@
-export type Task = {
+export type SharedTask = {
   id: number;
   title: string;
   description?: string;
   completed?: boolean;
-  userId: string;
 };

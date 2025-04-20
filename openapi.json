@@ -45,6 +45,18 @@
               }
             }
           }
+        },
+        "responses": {
+          "200": {
+            "description": "JWT token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SigninUserResDto"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -80,7 +92,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskDto"
+                "$ref": "#/components/schemas/CreateTaskPayloadDto"
               }
             }
           }
@@ -91,7 +103,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskDto"
+                  "$ref": "#/components/schemas/CreateTaskResDto"
                 }
               }
             }
@@ -161,7 +173,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TaskDto"
+                "$ref": "#/components/schemas/CreateTaskPayloadDto"
               }
             }
           }
@@ -172,7 +184,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskDto"
+                  "$ref": "#/components/schemas/CreateTaskResDto"
                 }
               }
             }
@@ -213,6 +225,32 @@
   },
   "components": {
     "schemas": {
+      "CreateTaskPayloadDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Learn Node.js"
+          },
+          "description": {
+            "type": "string",
+            "example": "Build a CRUD API"
+          },
+          "completed": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "CreateTaskResDto": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "type": "object",
+            "$ref": "#/components/schemas/TaskDto"
+          }
+        }
+      },
       "TaskDto": {
         "type": "object",
         "properties": {
@@ -278,6 +316,15 @@
             "type": "string",
             "example": "abcd",
             "nullable": true
+          }
+        }
+      },
+      "SigninUserResDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "abcd.abcd.abcd"
           }
         }
       }
