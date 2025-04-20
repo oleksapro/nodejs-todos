@@ -11,6 +11,20 @@
       "description": "Local development server"
     }
   ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Registration and Signin into the system"
+    },
+    {
+      "name": "Shared Tasks",
+      "description": "Work without authentication"
+    },
+    {
+      "name": "Tasks",
+      "description": "Need authentication"
+    }
+  ],
   "paths": {
     "/users/register": {
       "post": {
