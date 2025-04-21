@@ -26,6 +26,8 @@ The API exposes three main resource groups:
 - **Task:** Manages individual tasks, allowing users to create, read, update, and delete their own tasks.
 - **Users:** Handles user registration and authentication.
 
+This application includes a Dockerfile for containerization, allowing for easy setup and execution within a Docker environment.
+
 This project serves as a practical learning exercise, showcasing how to build a functional API using core Node.js features and a selection of fundamental libraries, while adhering to a well-organized architectural pattern.
 
 ## Getting started
