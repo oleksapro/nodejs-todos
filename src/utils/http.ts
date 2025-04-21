@@ -15,33 +15,43 @@ export class ResError extends Error {
   }
 }
 
-export const handleError = (res: ResponseMod, err: Error) => {
-  if (err.cause === "forbidden") {
-    res.writeHead(HTTP_STATUS.forbidden, {
+export const handleError = (res: ResponseMod, err: Error | unknown) => {
+  if (err instanceof Error) {
+    if (err.cause === "forbidden") {
+      res.writeHead(HTTP_STATUS.forbidden, {
+        "Content-Type": "application/json",
+      });
+      res.end(JSON.stringify({ message: "Forbidden" }));
+      return;
+    }
+
+    if (err.cause === "not-found") {
+      res.writeHead(HTTP_STATUS.notFound, {
+        "Content-Type": "application/json",
+      });
+      res.end(JSON.stringify({ error: "Not found" }));
+      return;
+    }
+
+    res.writeHead(HTTP_STATUS.serverError, {
       "Content-Type": "application/json",
     });
-    res.end(JSON.stringify({ message: "Forbidden" }));
+
+    const { message, ...restErrorProps } = err;
+
+    res.end(
+      JSON.stringify({
+        ...restErrorProps,
+        message: message || "Something went wrong",
+      }),
+    );
+
     return;
   }
-
-  if (err.cause === "not-found") {
-    res.writeHead(HTTP_STATUS.notFound, {
-      "Content-Type": "application/json",
-    });
-    res.end(JSON.stringify({ error: "Task not found" }));
-    return;
-  }
-
-  res.writeHead(HTTP_STATUS.serverError, {
-    "Content-Type": "application/json",
-  });
-
-  const { message, ...restErrorProps } = err;
 
   res.end(
     JSON.stringify({
-      ...restErrorProps,
-      message: message || "Something went wrong",
+      message: "Something went wrong",
     }),
   );
 };

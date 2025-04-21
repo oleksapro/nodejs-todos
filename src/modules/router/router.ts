@@ -1,8 +1,8 @@
 import { IncomingMessage } from "node:http";
 
 import type { Route, ResponseMod, RequestMod } from "./types.ts";
-import { HTTP_STATUS } from "./const.ts";
 import { matchPath } from "./utils/matchPath.ts";
+import { handleError, ResError } from "../../utils/http.ts";
 
 const parseBody = (req: IncomingMessage, callback: (body: any) => void) => {
   let body = "";
@@ -39,7 +39,6 @@ export const router = (routes: Route[]) => {
       }
     }
 
-    res.writeHead(HTTP_STATUS.notFound, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ message: "Not found" }));
+    handleError(res, new ResError({ cause: "not-found" }));
   };
 };

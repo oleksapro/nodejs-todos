@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { HTTP_STATUS, type RequestContext } from "../modules/router/index.ts";
 import type { CreateUserPayload } from "../repositories/user.repository.ts";
 import * as repository from "../repositories/user.repository.ts";
-import { handleError } from "../utils/http.ts";
+import { handleError, ResError } from "../utils/http.ts";
 import { type ResponseMod } from "../modules/router/types.ts";
 import { config } from "../config.ts";
 import type { User } from "../entities/User.ts";
@@ -47,6 +47,10 @@ export const signIn = (
   repository.getUserSensitiveByEmail(payload.email, function (err, user) {
     if (err) {
       return handleError(res, err);
+    }
+
+    if (!user) {
+      return handleError(res, new ResError({ cause: "not-found" }));
     }
 
     bcrypt.compare(payload.password, user.password).then((isPasswordMatch) => {
