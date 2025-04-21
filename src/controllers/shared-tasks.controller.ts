@@ -43,6 +43,10 @@ const getTask = (
       return handleError(res, err);
     }
 
+    if (!task) {
+      return handleError(res, new ResError({ cause: "not-found" }));
+    }
+
     res.writeHead(HTTP_STATUS.success, {
       "Content-Type": "application/json",
     });

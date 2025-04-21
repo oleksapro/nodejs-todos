@@ -136,6 +136,10 @@ const deleteTask = (
       return handleError(res, err);
     }
 
+    if (!task) {
+      return handleError(res, new ResError({ cause: "not-found" }));
+    }
+
     if (task.userId !== req.context.user?.id) {
       handleError(res, new ResError({ cause: "forbidden" }));
       return;
