@@ -7,8 +7,12 @@ import { logger } from "./services/logger.ts";
 
 export const server = createServer(router(routes));
 
+server.timeout = config.server.timeout;
+
 process.on("uncaughtException", (err) => {
-  logger.error(err, "Uncaught Exception:");
+  logger.fatal(err, "Uncaught Exception:");
+
+  logger.info("Uncaught Exception. Attempting graceful shutdown...");
 
   server.close(() => {
     logger.info("Server closed due to uncaught exception");
@@ -18,6 +22,8 @@ process.on("uncaughtException", (err) => {
 
 process.on("unhandledRejection", (reason) => {
   logger.error(reason, "Unhandled Rejection at:");
+
+  logger.info("Unhandled Rejection. Attempting graceful shutdown...");
 
   server.close(() => {
     logger.info("Server closed due to unhandled rejection");
