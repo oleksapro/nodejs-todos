@@ -35,7 +35,7 @@ This project serves as a practical learning exercise, showcasing how to build a 
 ```bash
 npm install
 
-npm run dev
+npm run watch
 ```
 
 ### Docker
