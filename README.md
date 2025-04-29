@@ -55,3 +55,4 @@ After server started open [/swagger-ui ](http://localhost:3000/swagger-ui)
 ## Todo
 
 - Add validation
+- Add tests for all endpoints
