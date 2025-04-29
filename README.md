@@ -30,6 +30,8 @@ This application includes a Dockerfile for containerization, allowing for easy s
 
 This project serves as a practical learning exercise, showcasing how to build a functional API using core Node.js features and a selection of fundamental libraries, while adhering to a well-organized architectural pattern.
 
+The project intentionally utilizes the callback pattern for asynchronous operations to gain a fundamental understanding of Node.js's non-blocking nature. By directly engaging with callbacks, we aim to appreciate the core mechanisms of asynchronous JavaScript. This hands-on approach provides a deeper insight into the challenges and evolution of asynchronous programming in Node.js.
+
 ## Getting started
 
 ### Local
