@@ -31,6 +31,8 @@ process.on("unhandledRejection", (reason) => {
   });
 });
 
-server.listen(config.port, () => {
-  logger.info(`Server is running on port ${config.port}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  server.listen(config.port, () => {
+    logger.info(`Server is running on port ${config.port}`);
+  });
+}
