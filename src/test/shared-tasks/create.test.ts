@@ -1,7 +1,6 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { db } from "../../db.ts";
 import { clearSharedTasks } from "../../seed/shared-tasks.ts";
 
 describe("shared-tasks: create", () => {

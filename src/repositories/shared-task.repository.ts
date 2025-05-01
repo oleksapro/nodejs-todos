@@ -1,5 +1,5 @@
 import { db, TABLES } from "../db.ts";
-import type { SharedTask } from "../entities/SharedTask.ts";
+import type { SharedTask } from "../entities/shared-task.ts";
 import { ResError } from "../utils/http.ts";
 
 export const getTasks = (

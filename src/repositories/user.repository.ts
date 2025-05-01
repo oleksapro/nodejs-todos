@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 import { db, TABLES } from "../db.ts";
-import type { UserSensitive, User } from "../entities/User.ts";
+import type { UserSensitive, User } from "../entities/user1.ts";
 import { ResError } from "../utils/http.ts";
 
 export function omitSensitiveUserProps(user: UserSensitive): User {

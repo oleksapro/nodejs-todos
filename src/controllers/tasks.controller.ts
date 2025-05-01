@@ -1,4 +1,4 @@
-import type { Task } from "../entities/Task.ts";
+import type { Task } from "../entities/task1.ts";
 import { HTTP_STATUS } from "../modules/router/const.ts";
 import {
   type RequestContext,

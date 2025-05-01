@@ -20,4 +20,14 @@ export const config = {
   },
 };
 
-logger.info(config, "Server loaded config:");
+export type Config = typeof config;
+
+const getProtectedConfig = (config: Config) => {
+  const configClone = structuredClone(config);
+
+  configClone.jwt.secret = "Hidden";
+
+  return configClone;
+};
+
+logger.info(getProtectedConfig(config), "Server loaded config:");

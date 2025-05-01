@@ -8,7 +8,7 @@ import * as repository from "../repositories/user.repository.ts";
 import { handleError, ResError } from "../utils/http.ts";
 import { type ResponseMod } from "../modules/router/types.ts";
 import { config } from "../config.ts";
-import type { User } from "../entities/User.ts";
+import type { User } from "../entities/user1.ts";
 
 export type JwtType = {
   user: User;

@@ -1,5 +1,5 @@
 import type { SharedTaskDto } from "../controllers/shared-tasks.controller.ts";
-import { db } from "../db.ts";
+import { db, dbAsync, TABLES } from "../db.ts";
 
 export const seededSharedTasks: SharedTaskDto[] = [
   {
@@ -17,16 +17,25 @@ export const seededSharedTasks: SharedTaskDto[] = [
 ];
 
 export async function seedSharedTasks() {
-  db.run(
-    "INSERT INTO shared_tasks (title, description, completed) VALUES (?, ?, ?)",
-    ["Seeded Task 1", "Seeded Description 1", 0],
+  await dbAsync.run(
+    `INSERT INTO ${TABLES.SHARED_TASKS} (title, description, completed) VALUES (?, ?, ?)`,
+    [
+      seededSharedTasks[0].title,
+      seededSharedTasks[0].description,
+      seededSharedTasks[0].completed,
+    ],
   );
-  db.run(
-    "INSERT INTO shared_tasks (title, description, completed) VALUES (?, ?, ?)",
-    ["Seeded Task 2", "Seeded Description 2", 1],
+
+  dbAsync.run(
+    `INSERT INTO ${TABLES.SHARED_TASKS} (title, description, completed) VALUES (?, ?, ?)`,
+    [
+      seededSharedTasks[1].title,
+      seededSharedTasks[1].description,
+      seededSharedTasks[1].completed,
+    ],
   );
 }
 
 export async function clearSharedTasks() {
-  db.run("DELETE FROM shared_tasks");
+  db.run(`DELETE FROM ${TABLES.SHARED_TASKS}`);
 }

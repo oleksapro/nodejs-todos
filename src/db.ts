@@ -1,3 +1,4 @@
+import { promisify } from "node:util";
 import sqlite3 from "sqlite3";
 
 import { logger } from "./services/logger.ts";
@@ -11,13 +12,29 @@ export const TABLES = {
   TASKS: "tasks",
 };
 
-export const db = new sqlite.Database(config.databaseUrl, (err) => {
+const db = new sqlite.Database(config.databaseUrl, (err) => {
   if (err) {
     logger.error("Error connecting to database:", err.message);
   } else {
     logger.info("Connected to the SQLite database.");
   }
 });
+
+function runAsync(sql: string, params: unknown[] = []): Promise<void> {
+  return new Promise((resolve, reject) => {
+    db.run(sql, params, function (err) {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve();
+    });
+  });
+}
+
+const dbAsync = {
+  run: runAsync,
+};
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS ${TABLES.USERS} (
@@ -42,3 +59,5 @@ db.exec(`
     FOREIGN KEY (userId) REFERENCES users(id)
   );
 `);
+
+export { db, dbAsync };

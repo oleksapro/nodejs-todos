@@ -8,7 +8,7 @@ import type {
   UpdateTaskPayload,
 } from "../repositories/shared-task.repository.ts";
 import { handleError, ResError } from "../utils/http.ts";
-import type { SharedTask } from "../entities/SharedTask.ts";
+import type { SharedTask } from "../entities/shared-task.ts";
 
 export type SharedTaskDto = Omit<SharedTask, "completed"> & {
   completed?: boolean;
@@ -105,15 +105,25 @@ const deleteTask = (
   res: ResponseMod,
   { params }: RequestContext,
 ) => {
-  repository.deleteTask(params.id, (err) => {
+  repository.getTask(params.id, (err, task) => {
     if (err) {
       return handleError(res, err);
     }
 
-    res.writeHead(HTTP_STATUS.success, {
-      "Content-Type": "application/json",
+    if (!task) {
+      return handleError(res, new ResError({ cause: "not-found" }));
+    }
+
+    repository.deleteTask(params.id, (err) => {
+      if (err) {
+        return handleError(res, err);
+      }
+
+      res.writeHead(HTTP_STATUS.success, {
+        "Content-Type": "application/json",
+      });
+      res.end(JSON.stringify({ message: "Deleted" }));
     });
-    res.end(JSON.stringify({ message: "Deleted" }));
   });
 };
 

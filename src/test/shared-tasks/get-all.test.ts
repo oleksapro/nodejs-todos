@@ -23,7 +23,7 @@ describe("shared-tasks: get all", () => {
 
   it("should return a list of tasks", async () => {
     // Arrange
-    seedSharedTasks();
+    await seedSharedTasks();
 
     // Act
     const response = await request(server).get("/shared-tasks");
