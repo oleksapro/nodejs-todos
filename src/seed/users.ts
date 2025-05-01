@@ -1,5 +1,5 @@
 import { db, dbAsync, TABLES } from "../db.ts";
-import type { UserSensitive } from "../entities/user1.ts";
+import type { UserSensitive } from "../entities/user.ts";
 
 const user: UserSensitive = {
   id: 1,
