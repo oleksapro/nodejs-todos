@@ -1,7 +1,10 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { clearSharedTasks, seedSharedTasks } from "../../seed/shared-tasks.ts";
+import {
+  clearSharedTasks,
+  seedSharedTasks,
+} from "../../seed/shared-tasks.seed.ts";
 
 describe("shared-tasks: delete", () => {
   afterEach(async () => {
@@ -25,7 +28,7 @@ describe("shared-tasks: delete", () => {
 
     expect(responseNotFound.status).toBe(404);
     expect(responseNotFound.body).toEqual({
-      error: "Not found",
+      message: "Not found",
     });
   });
 
@@ -35,7 +38,7 @@ describe("shared-tasks: delete", () => {
 
     expect(response.status).toBe(404);
     expect(response.body).toEqual({
-      error: "Not found",
+      message: "Not found",
     });
   });
 });

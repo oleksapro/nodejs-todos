@@ -1,7 +1,10 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { clearSharedTasks, seedSharedTasks } from "../../seed/shared-tasks.ts";
+import {
+  clearSharedTasks,
+  seedSharedTasks,
+} from "../../seed/shared-tasks.seed.ts";
 import type { SharedTaskDto } from "../../controllers/shared-tasks.controller.ts";
 
 describe("shared-tasks: update", () => {

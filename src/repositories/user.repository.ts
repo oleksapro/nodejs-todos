@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { db, TABLES } from "../db.ts";
 import type { UserSensitive, User } from "../entities/user.ts";
 import { ResError } from "../utils/http.ts";
+import { config } from "../config.ts";
 
 export function omitSensitiveUserProps(user: UserSensitive): User {
   const { password, ...otherUserProps } = user;
@@ -63,33 +64,37 @@ export const createUser = (
   payload: CreateUserPayload,
   callback: (err: Error | null, user?: User) => void,
 ) => {
-  bcrypt.hash(payload.password, 10, function (err, hashedPassword) {
-    if (err) {
-      callback(err);
-      return;
-    }
+  bcrypt.hash(
+    payload.password,
+    config.jwt.hasRounds,
+    function (err, hashedPassword) {
+      if (err) {
+        callback(err);
+        return;
+      }
 
-    db.run(
-      `INSERT INTO ${TABLES.USERS} (email, password) VALUES (?, ?)`,
-      [payload.email, hashedPassword],
-      async function (err) {
-        if (err) {
-          callback(err);
-          return;
-        }
+      db.run(
+        `INSERT INTO ${TABLES.USERS} (email, password) VALUES (?, ?)`,
+        [payload.email, hashedPassword],
+        async function (err) {
+          if (err) {
+            callback(err);
+            return;
+          }
 
-        const id = this.lastID;
+          const id = this.lastID;
 
-        db.get<UserSensitive>(
-          `SELECT * FROM ${TABLES.USERS} WHERE id = ?`,
-          [id],
-          function (err, user) {
-            callback(err, omitSensitiveUserProps(user));
-          },
-        );
-      },
-    );
-  });
+          db.get<UserSensitive>(
+            `SELECT * FROM ${TABLES.USERS} WHERE id = ?`,
+            [id],
+            function (err, user) {
+              callback(err, omitSensitiveUserProps(user));
+            },
+          );
+        },
+      );
+    },
+  );
 };
 
 type UpdateUserPayload = Pick<UserSensitive, "email" | "password">;

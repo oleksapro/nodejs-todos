@@ -1,0 +1,72 @@
+import request from "supertest";
+
+import { server } from "../../server.ts";
+import { clearUsers, seededUser, seedUsers } from "../../seed/users.seed.ts";
+import type {
+  SignInPayload,
+  SignInResponse,
+} from "../../controllers/users.controller.ts";
+import { HTTP_STATUS } from "../../modules/router/const.ts";
+import type { IHasMessage } from "../../utils/http.ts";
+
+describe("users: sign in", () => {
+  afterEach(async () => {
+    await clearUsers();
+  });
+
+  it("should sign in a user", async () => {
+    // Arrange
+    await seedUsers();
+    const payload: SignInPayload = {
+      email: seededUser.email,
+      password: seededUser.password,
+    };
+    const expectedResponse: SignInResponse = {
+      token: expect.any(String),
+    };
+
+    // Act
+    const response = await request(server).post("/users/signin").send(payload);
+
+    // Assert
+    expect(response.status).toBe(HTTP_STATUS.success);
+    expect(response.body).toEqual(expectedResponse);
+  });
+
+  it("should reject sign in with wrong password", async () => {
+    // Arrange
+    await seedUsers();
+    const payload: SignInPayload = {
+      email: seededUser.email,
+      password: "wrong_password", // Incorrect password
+    };
+    const expectedResponse: IHasMessage = {
+      message: "Invalid credentials",
+    };
+
+    // Act
+    const response = await request(server).post("/users/signin").send(payload);
+
+    // Assert
+    expect(response.status).toBe(HTTP_STATUS.unauthorized);
+    expect(response.body).toEqual(expectedResponse);
+  });
+
+  it("should reject sign in with non-existent email", async () => {
+    // Arrange
+    const payload = {
+      email: "nonexistent@test.com",
+      password: "any_password",
+    };
+    const expectedResponse: IHasMessage = {
+      message: expect.any(String),
+    };
+
+    // Act
+    const response = await request(server).post("/users/signin").send(payload);
+
+    // Assert
+    expect(response.status).toBe(HTTP_STATUS.notFound);
+    expect(response.body).toEqual(expectedResponse);
+  });
+});

@@ -6,6 +6,10 @@ type ResErrorOptions = {
   cause: "not-found" | "forbidden";
 };
 
+export type IHasMessage = {
+  message: string;
+};
+
 export class ResError extends Error {
   cause: "not-found" | "forbidden" | string;
 
@@ -21,7 +25,7 @@ export const handleError = (res: ResponseMod, err: Error | unknown) => {
       res.writeHead(HTTP_STATUS.forbidden, {
         "Content-Type": "application/json",
       });
-      res.end(JSON.stringify({ message: "Forbidden" }));
+      res.end(JSON.stringify({ message: "Forbidden" } as IHasMessage));
       return;
     }
 
@@ -29,7 +33,7 @@ export const handleError = (res: ResponseMod, err: Error | unknown) => {
       res.writeHead(HTTP_STATUS.notFound, {
         "Content-Type": "application/json",
       });
-      res.end(JSON.stringify({ error: "Not found" }));
+      res.end(JSON.stringify({ message: "Not found" } as IHasMessage));
       return;
     }
 
@@ -43,7 +47,7 @@ export const handleError = (res: ResponseMod, err: Error | unknown) => {
       JSON.stringify({
         ...restErrorProps,
         message: message || "Something went wrong",
-      }),
+      } as IHasMessage),
     );
 
     return;
@@ -52,6 +56,6 @@ export const handleError = (res: ResponseMod, err: Error | unknown) => {
   res.end(
     JSON.stringify({
       message: "Something went wrong",
-    }),
+    } as IHasMessage),
   );
 };

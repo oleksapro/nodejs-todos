@@ -14,7 +14,10 @@ export type JwtType = {
   user: User;
 };
 
-type RegisterPayload = CreateUserPayload;
+export type RegisterPayload = CreateUserPayload;
+export type RegisterResponse = {
+  user: User | undefined;
+};
 
 export const register = (
   _req: IncomingMessage,
@@ -31,11 +34,16 @@ export const register = (
     res.writeHead(HTTP_STATUS.created, {
       "Content-Type": "application/json",
     });
-    res.end(JSON.stringify({ user: user }));
+
+    const response: RegisterResponse = { user: user };
+    res.end(JSON.stringify(response));
   });
 };
 
-type SignInPayload = CreateUserPayload;
+export type SignInPayload = CreateUserPayload;
+export type SignInResponse = {
+  token: string;
+};
 
 export const signIn = (
   _req: IncomingMessage,
@@ -70,7 +78,9 @@ export const signIn = (
         },
       );
 
-      res.writeHead(200, { "Content-Type": "application/json" });
+      res.writeHead(HTTP_STATUS.success, {
+        "Content-Type": "application/json",
+      });
       res.end(JSON.stringify({ token: token }));
     });
   });

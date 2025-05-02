@@ -1,19 +1,23 @@
+import bcrypt from "bcrypt";
+
 import { db, dbAsync, TABLES } from "../db.ts";
 import type { UserSensitive } from "../entities/user.ts";
 
-const user: UserSensitive = {
+export const seededUser: UserSensitive = {
   id: 1,
   email: "user@email.com",
   password: "abcd",
 };
 
 export async function seedUsers() {
+  const hashedPassword = bcrypt.hashSync(seededUser.password, 10);
+
   await dbAsync.run(
     `INSERT INTO ${TABLES.USERS} (email, password) VALUES (?, ?)`,
-    [user.email, user.password],
+    [seededUser.email, hashedPassword],
   );
 }
 
-export async function clearSharedTasks() {
+export async function clearUsers() {
   db.run(`DELETE FROM ${TABLES.USERS}`);
 }
