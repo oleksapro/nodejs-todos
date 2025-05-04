@@ -1,5 +1,6 @@
+import type { TaskDto } from "../controllers/tasks.controller.ts";
 import { db, TABLES } from "../db.ts";
-import type { Task } from "../entities/task1.ts";
+import type { Task } from "../entities/task.ts";
 import { ResError } from "../utils/http.ts";
 
 export const getTasks = (
@@ -27,7 +28,7 @@ export const getTask = (
 };
 
 export type CreateTaskPayload = Pick<
-  Task,
+  TaskDto,
   "title" | "description" | "completed"
 >;
 

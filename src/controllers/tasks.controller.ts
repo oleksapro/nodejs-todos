@@ -1,4 +1,4 @@
-import type { Task } from "../entities/task1.ts";
+import type { Task } from "../entities/task.ts";
 import { HTTP_STATUS } from "../modules/router/const.ts";
 import {
   type RequestContext,
@@ -68,6 +68,10 @@ const getTask = (
   });
 };
 
+export type CreateTaskResponse = {
+  task: TaskDto;
+};
+
 const createTask = (
   req: RequestMod,
   res: ResponseMod,
@@ -88,7 +92,7 @@ const createTask = (
     res.writeHead(HTTP_STATUS.created, {
       "Content-Type": "application/json",
     });
-    res.end(JSON.stringify({ task: convertToDto(task) }));
+    res.end(JSON.stringify({ task: convertToDto(task) } as CreateTaskResponse));
   });
 };
 

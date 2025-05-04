@@ -66,7 +66,7 @@ export const createUser = (
 ) => {
   bcrypt.hash(
     payload.password,
-    config.jwt.hasRounds,
+    config.jwt.hashRounds,
     function (err, hashedPassword) {
       if (err) {
         callback(err);

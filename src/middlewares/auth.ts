@@ -9,13 +9,14 @@ import {
 import { HTTP_STATUS } from "../modules/router/const.ts";
 import { config } from "../config.ts";
 import type { JwtType } from "../controllers/users.controller.ts";
+import type { IHasMessage } from "../utils/http.ts";
 
 export const authMiddleware =
   (
     next: (req: RequestMod, res: ResponseMod, context: RequestContext) => void,
   ) =>
-  (req1: IncomingMessage, res: ResponseMod, context: RequestContext) => {
-    const req = req1 as RequestMod;
+  (request: IncomingMessage, res: ResponseMod, context: RequestContext) => {
+    const req = request as RequestMod;
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -31,7 +32,7 @@ export const authMiddleware =
     jwt.verify(token, config.jwt.secret, (err, decoded) => {
       if (err) {
         res.writeHead(401, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "Invalid token" }));
+        res.end(JSON.stringify({ message: "Invalid token" } as IHasMessage));
         return;
       }
 
