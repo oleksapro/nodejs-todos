@@ -23,5 +23,5 @@ export async function seedUsers() {
 }
 
 export async function clearUsers() {
-  db.run(`DELETE FROM ${TABLES.USERS}`);
+  dbAsync.run(`DELETE FROM ${TABLES.USERS}`);
 }

@@ -48,6 +48,10 @@ const getTask = (
       return handleError(res, err);
     }
 
+    if (!task) {
+      return handleError(res, new ResError({ cause: "not-found" }));
+    }
+
     if (task.userId !== req.context.user?.id) {
       res.writeHead(HTTP_STATUS.forbidden, {
         "Content-Type": "application/json",
