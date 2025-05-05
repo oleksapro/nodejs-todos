@@ -2,7 +2,7 @@ import type { TaskDto } from "../controllers/tasks.controller.ts";
 import { db, dbAsync, TABLES } from "../db.ts";
 import { seededUser } from "./users.seed.ts";
 
-export const seededSharedTasks: TaskDto[] = [
+export const seededTasks: TaskDto[] = [
   {
     id: 1,
     title: "Seeded Task 1",
@@ -21,9 +21,9 @@ export async function seedTasks() {
   await dbAsync.run(
     `INSERT INTO ${TABLES.TASKS} (title, description, completed, userId) VALUES (?, ?, ?, ?)`,
     [
-      seededSharedTasks[0].title,
-      seededSharedTasks[0].description,
-      seededSharedTasks[0].completed,
+      seededTasks[0].title,
+      seededTasks[0].description,
+      seededTasks[0].completed,
       seededUser.id,
     ],
   );
@@ -31,9 +31,9 @@ export async function seedTasks() {
   dbAsync.run(
     `INSERT INTO ${TABLES.TASKS} (title, description, completed, userId) VALUES (?, ?, ?, ?)`,
     [
-      seededSharedTasks[1].title,
-      seededSharedTasks[1].description,
-      seededSharedTasks[1].completed,
+      seededTasks[1].title,
+      seededTasks[1].description,
+      seededTasks[1].completed,
       seededUser.id,
     ],
   );
