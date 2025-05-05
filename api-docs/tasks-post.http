@@ -1,6 +1,0 @@
-POST http://localhost:3000/tasks
-
-{
-    "title": "sample",
-    "description": "hello"
-}
