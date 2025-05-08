@@ -28,7 +28,8 @@
     "jsonwebtoken": "^9.0.2",
     "pino": "^9.6.0",
     "sqlite3": "^5.1.7",
-    "swagger-ui-dist": "^5.20.2"
+    "swagger-ui-dist": "^5.20.2",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@swc/jest": "^0.2.37",

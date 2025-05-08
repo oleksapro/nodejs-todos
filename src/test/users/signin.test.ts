@@ -2,12 +2,10 @@ import request from "supertest";
 
 import { server } from "../../server.ts";
 import { clearUsers, seededUser, seedUsers } from "../../seed/users.seed.ts";
-import type {
-  SignInPayload,
-  SignInResponse,
-} from "../../controllers/users.controller.ts";
+import type { SignInResponse } from "../../controllers/users.controller.ts";
 import { HTTP_STATUS } from "../../modules/router/const.ts";
 import type { IHasMessage } from "../../utils/http.ts";
+import type { SignInPayload } from "../../schemas/user.schema.ts";
 
 describe("users: sign in", () => {
   afterEach(async () => {

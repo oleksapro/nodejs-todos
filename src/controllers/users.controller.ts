@@ -9,12 +9,12 @@ import { handleError, ResError } from "../utils/http.ts";
 import { type ResponseMod } from "../modules/router/types.ts";
 import { config } from "../config.ts";
 import type { User } from "../entities/user.ts";
+import { registerSchema, signInSchema } from "../schemas/user.schema.ts";
 
 export type JwtType = {
   user: User;
 };
 
-export type RegisterPayload = CreateUserPayload;
 export type RegisterResponse = {
   user: User | undefined;
 };
@@ -24,7 +24,19 @@ export const register = (
   res: ResponseMod,
   { body }: RequestContext,
 ) => {
-  const payload = body as RegisterPayload;
+  const validationResult = registerSchema.safeParse(body);
+
+  if (!validationResult.success) {
+    return handleError(
+      res,
+      new ResError({
+        cause: "validation",
+        errors: validationResult.error.issues,
+      }),
+    );
+  }
+
+  const payload = validationResult.data;
 
   repository.createUser(payload, function (err, user) {
     if (err) {
@@ -50,7 +62,19 @@ export const signIn = (
   res: ResponseMod,
   { body }: RequestContext,
 ) => {
-  const payload = body as SignInPayload;
+  const validationResult = signInSchema.safeParse(body);
+
+  if (!validationResult.success) {
+    return handleError(
+      res,
+      new ResError({
+        cause: "validation",
+        errors: validationResult.error.issues,
+      }),
+    );
+  }
+
+  const payload = validationResult.data;
 
   repository.getUserSensitiveByEmail(payload.email, function (err, user) {
     if (err) {
