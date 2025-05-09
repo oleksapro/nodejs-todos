@@ -7,9 +7,6 @@ import { HTTP_STATUS } from "../../modules/router/const.ts";
 import type { RegisterPayload } from "../../schemas/user.schema.ts";
 
 describe("users: register", () => {
-  afterEach(async () => {
-    await clearUsers();
-  });
   afterAll(async () => {
     await clearUsers();
   });

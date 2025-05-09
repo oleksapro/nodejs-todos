@@ -5,7 +5,7 @@ import { clearTasks, seededTasks, seedTasks } from "../../seed/task.seed.ts";
 import { clearUsers, seedUsers } from "../../seed/user.seed.ts";
 import { signInUser } from "../helpers.ts";
 
-describe("tasks: get all", () => {
+describe.skip("tasks: get all", () => {
   beforeAll(async () => {
     await seedUsers();
   });

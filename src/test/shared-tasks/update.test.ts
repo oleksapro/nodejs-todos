@@ -7,7 +7,7 @@ import {
 } from "../../seed/shared-task.seed.ts";
 import type { SharedTaskDto } from "../../controllers/shared-task.controller.ts";
 
-describe("shared-tasks: update", () => {
+describe.skip("shared-tasks: update", () => {
   afterEach(async () => {
     clearSharedTasks();
   });

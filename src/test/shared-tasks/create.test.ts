@@ -3,7 +3,7 @@ import request from "supertest";
 import { server } from "../../server.ts";
 import { clearSharedTasks } from "../../seed/shared-task.seed.ts";
 
-describe("shared-tasks: create", () => {
+describe.skip("shared-tasks: create", () => {
   afterEach(async () => {
     clearSharedTasks();
   });

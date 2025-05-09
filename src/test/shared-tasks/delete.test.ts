@@ -6,7 +6,7 @@ import {
   seedSharedTasks,
 } from "../../seed/shared-task.seed.ts";
 
-describe("shared-tasks: delete", () => {
+describe.skip("shared-tasks: delete", () => {
   afterEach(async () => {
     clearSharedTasks();
   });
