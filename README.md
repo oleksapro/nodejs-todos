@@ -10,6 +10,7 @@ The project implements core functionalities including user authentication and ta
 - **Logging:** `pino` is integrated for structured and efficient logging of application events.
 - **Validation:** `zod` is used to provide TypeScript-first schema declaration and validation.
 - **API Exploration:** Swagger UI (`swagger-ui-dist`) is included to provide an interactive API playground for easy testing and documentation.
+- **Testing:** `supertest` and `jest` empowered tests.
 
 The codebase follows a layered architecture, separating concerns into distinct directories:
 
