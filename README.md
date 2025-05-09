@@ -8,6 +8,7 @@ The project implements core functionalities including user authentication and ta
 - **Configuration:** Environment variables are managed using `dotenv` for secure and flexible configuration.
 - **User Authentication:** JSON Web Tokens (`jsonwebtoken`) are employed for secure user authentication, with `bcrypt` used for password hashing.
 - **Logging:** `pino` is integrated for structured and efficient logging of application events.
+- **Validation:** `zod` is used to provide TypeScript-first schema declaration and validation.
 - **API Exploration:** Swagger UI (`swagger-ui-dist`) is included to provide an interactive API playground for easy testing and documentation.
 
 The codebase follows a layered architecture, separating concerns into distinct directories:
@@ -19,6 +20,7 @@ The codebase follows a layered architecture, separating concerns into distinct d
 - **Services:** Contain business logic and orchestrate interactions between repositories and other layers.
 - **Utils:** Provide utility functions for various tasks.
 - **Entities:** Define the data structures used throughout the application.
+- **Schemas:** Define the validation schemas.
 
 The API exposes three main resource groups:
 
@@ -30,7 +32,7 @@ This application includes a Dockerfile for containerization, allowing for easy s
 
 This project serves as a practical learning exercise, showcasing how to build a functional API using core Node.js features and a selection of fundamental libraries, while adhering to a well-organized architectural pattern.
 
-The project intentionally utilizes the callback pattern for asynchronous operations to gain a fundamental understanding of Node.js's non-blocking nature. By directly engaging with callbacks, we aim to appreciate the core mechanisms of asynchronous JavaScript. This hands-on approach provides a deeper insight into the challenges and evolution of asynchronous programming in Node.js.
+The project intentionally utilizes the **callback** pattern for asynchronous operations to gain a fundamental understanding of Node.js's non-blocking nature. By directly engaging with callbacks, we aim to appreciate the core mechanisms of asynchronous JavaScript. This hands-on approach provides a deeper insight into the challenges and evolution of asynchronous programming in Node.js.
 
 ## Getting started
 
@@ -54,5 +56,4 @@ After server started open [/swagger-ui ](http://localhost:3000/swagger-ui)
 
 ## Todo
 
-- Add validation
 - Add pipeline with type checking and test running
