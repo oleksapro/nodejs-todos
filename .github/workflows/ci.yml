@@ -31,3 +31,4 @@ jobs:
         run: npm test # Assumes you have a 'test' script defined in your package.json
         env:
           NODE_ENV: test # Set NODE_ENV to 'test' for your tests
+          JWT_SECRET: 123
