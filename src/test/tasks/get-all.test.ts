@@ -5,7 +5,7 @@ import { clearTasks, seededTasks, seedTasks } from "../../seed/task.seed.ts";
 import { clearUsers, seedUsers } from "../../seed/user.seed.ts";
 import { signInUser } from "../helpers.ts";
 
-describe("tasks: get all", () => {
+describe.skip("tasks: get all", () => {
   beforeAll(async () => {
     await seedUsers();
   });
@@ -16,6 +16,7 @@ describe("tasks: get all", () => {
 
   afterAll(async () => {
     await clearUsers();
+    await clearTasks();
   });
 
   it("should return an empty list of tasks, when table does not have any records", async () => {

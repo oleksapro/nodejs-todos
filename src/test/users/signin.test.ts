@@ -11,6 +11,9 @@ describe("users: sign in", () => {
   afterEach(async () => {
     await clearUsers();
   });
+  afterAll(async () => {
+    await clearUsers();
+  });
 
   it("should sign in a user", async () => {
     // Arrange

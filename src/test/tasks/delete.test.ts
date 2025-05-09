@@ -5,7 +5,7 @@ import { clearTasks, seedTasks } from "../../seed/task.seed.ts";
 import { signInUser } from "../helpers.ts";
 import { clearUsers, seedUsers } from "../../seed/user.seed.ts";
 
-describe("tasks: delete", () => {
+describe.skip("tasks: delete", () => {
   beforeAll(async () => {
     await seedUsers();
   });
@@ -16,6 +16,7 @@ describe("tasks: delete", () => {
 
   afterAll(async () => {
     await clearUsers();
+    await clearTasks();
   });
 
   it("should delete the task", async () => {

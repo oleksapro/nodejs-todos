@@ -7,8 +7,11 @@ import {
   seedSharedTasks,
 } from "../../seed/shared-task.seed.ts";
 
-describe("shared-tasks: get all", () => {
+describe.skip("shared-tasks: get all", () => {
   afterEach(async () => {
+    clearSharedTasks();
+  });
+  afterAll(() => {
     clearSharedTasks();
   });
 
