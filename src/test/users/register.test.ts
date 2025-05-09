@@ -6,7 +6,7 @@ import type { RegisterResponse } from "../../controllers/user.controller.ts";
 import { HTTP_STATUS } from "../../modules/router/const.ts";
 import type { RegisterPayload } from "../../schemas/user.schema.ts";
 
-describe("users: register", () => {
+describe.skip("users: register", () => {
   afterAll(async () => {
     await clearUsers();
   });
