@@ -7,6 +7,9 @@ describe("shared-tasks: create", () => {
   afterEach(async () => {
     clearSharedTasks();
   });
+  afterAll(() => {
+    clearSharedTasks();
+  });
 
   it("should create a new task", async () => {
     // Act

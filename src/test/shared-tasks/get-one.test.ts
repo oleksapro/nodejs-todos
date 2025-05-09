@@ -11,6 +11,9 @@ describe("shared-tasks: get one", () => {
   afterEach(async () => {
     clearSharedTasks();
   });
+  afterAll(() => {
+    clearSharedTasks();
+  });
 
   it("should return not found", async () => {
     // Act

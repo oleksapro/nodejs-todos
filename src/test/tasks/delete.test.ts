@@ -16,6 +16,7 @@ describe("tasks: delete", () => {
 
   afterAll(async () => {
     await clearUsers();
+    await clearTasks();
   });
 
   it("should delete the task", async () => {

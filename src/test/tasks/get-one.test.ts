@@ -16,6 +16,7 @@ describe("tasks: get one", () => {
 
   afterAll(async () => {
     await clearUsers();
+    await clearTasks();
   });
 
   it("should return not found", async () => {

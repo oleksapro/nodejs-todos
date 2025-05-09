@@ -16,6 +16,7 @@ describe("tasks: get all", () => {
 
   afterAll(async () => {
     await clearUsers();
+    await clearTasks();
   });
 
   it("should return an empty list of tasks, when table does not have any records", async () => {

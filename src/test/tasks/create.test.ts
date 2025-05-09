@@ -20,6 +20,7 @@ describe("tasks: create", () => {
 
   afterAll(async () => {
     await clearUsers();
+    await clearTasks();
   });
 
   it("should reject unauthorized request", async () => {

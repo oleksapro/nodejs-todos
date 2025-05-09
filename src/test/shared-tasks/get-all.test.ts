@@ -11,6 +11,9 @@ describe("shared-tasks: get all", () => {
   afterEach(async () => {
     clearSharedTasks();
   });
+  afterAll(() => {
+    clearSharedTasks();
+  });
 
   it("should return an empty list of tasks, when table does not have any records", async () => {
     // Act

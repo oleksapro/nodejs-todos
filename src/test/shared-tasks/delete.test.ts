@@ -10,6 +10,9 @@ describe("shared-tasks: delete", () => {
   afterEach(async () => {
     clearSharedTasks();
   });
+  afterAll(() => {
+    clearSharedTasks();
+  });
 
   it("should delete the shared task", async () => {
     // Arrange

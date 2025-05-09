@@ -11,6 +11,9 @@ describe("shared-tasks: update", () => {
   afterEach(async () => {
     clearSharedTasks();
   });
+  afterAll(() => {
+    clearSharedTasks();
+  });
 
   it("should update a task", async () => {
     // Arrange
