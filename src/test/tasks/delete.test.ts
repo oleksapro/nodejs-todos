@@ -1,9 +1,9 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { clearTasks, seedTasks } from "../../seed/tasks.seed.ts";
+import { clearTasks, seedTasks } from "../../seed/task.seed.ts";
 import { signInUser } from "../helpers.ts";
-import { clearUsers, seedUsers } from "../../seed/users.seed.ts";
+import { clearUsers, seedUsers } from "../../seed/user.seed.ts";
 
 describe("tasks: delete", () => {
   beforeAll(async () => {

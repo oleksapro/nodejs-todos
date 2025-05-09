@@ -5,7 +5,7 @@ import {
   clearSharedTasks,
   seededSharedTasks,
   seedSharedTasks,
-} from "../../seed/shared-tasks.seed.ts";
+} from "../../seed/shared-task.seed.ts";
 
 describe("shared-tasks: get one", () => {
   afterEach(async () => {

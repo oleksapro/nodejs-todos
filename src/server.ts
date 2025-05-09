@@ -2,7 +2,7 @@ import { createServer } from "node:http";
 
 import { config } from "./config.ts";
 import { router } from "./modules/router/router.ts";
-import { routes } from "./routes/routes.ts";
+import { routes } from "./routes/route.ts";
 import { logger } from "./services/logger.ts";
 
 export const server = createServer(router(routes));

@@ -1,8 +1,8 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { clearTasks, seededTasks, seedTasks } from "../../seed/tasks.seed.ts";
-import { clearUsers, seedUsers } from "../../seed/users.seed.ts";
+import { clearTasks, seededTasks, seedTasks } from "../../seed/task.seed.ts";
+import { clearUsers, seedUsers } from "../../seed/user.seed.ts";
 import { signInUser } from "../helpers.ts";
 
 describe("tasks: get all", () => {

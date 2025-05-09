@@ -1,6 +1,6 @@
 import type { TaskDto } from "../controllers/task.controller.ts";
 import { db, dbAsync, TABLES } from "../db.ts";
-import { seededUser } from "./users.seed.ts";
+import { seededUser } from "./user.seed.ts";
 
 export const seededTasks: TaskDto[] = [
   {

@@ -1,7 +1,7 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { clearUsers, seededUser, seedUsers } from "../../seed/users.seed.ts";
+import { clearUsers, seededUser, seedUsers } from "../../seed/user.seed.ts";
 import type { SignInResponse } from "../../controllers/user.controller.ts";
 import { HTTP_STATUS } from "../../modules/router/const.ts";
 import type { IHasMessage } from "../../utils/http.ts";

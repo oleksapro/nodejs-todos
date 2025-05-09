@@ -4,7 +4,7 @@ import { server } from "../../server.ts";
 import {
   clearSharedTasks,
   seedSharedTasks,
-} from "../../seed/shared-tasks.seed.ts";
+} from "../../seed/shared-task.seed.ts";
 
 describe("shared-tasks: delete", () => {
   afterEach(async () => {

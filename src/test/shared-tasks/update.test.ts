@@ -4,7 +4,7 @@ import { server } from "../../server.ts";
 import {
   clearSharedTasks,
   seedSharedTasks,
-} from "../../seed/shared-tasks.seed.ts";
+} from "../../seed/shared-task.seed.ts";
 import type { SharedTaskDto } from "../../controllers/shared-task.controller.ts";
 
 describe("shared-tasks: update", () => {

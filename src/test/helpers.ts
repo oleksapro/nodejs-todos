@@ -1,7 +1,7 @@
 import request from "supertest";
 
 import { server } from "../server.ts";
-import { seededUser } from "../seed/users.seed.ts";
+import { seededUser } from "../seed/user.seed.ts";
 import type { SignInResponse } from "../controllers/user.controller.ts";
 
 export async function signInUser(): Promise<SignInResponse> {
