@@ -30,6 +30,7 @@ jobs:
       - name: Setup test database
         run: |
           rm -f ./test.db # Delete existing test database file
+          rm -f ./tasks.db # Delete existing test database file
 
       - name: Run tests # Executes your test command
         run: npm test # Assumes you have a 'test' script defined in your package.json
