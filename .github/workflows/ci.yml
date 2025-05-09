@@ -27,6 +27,10 @@ jobs:
       - name: Install dependencies # Installs your project's dependencies
         run: npm ci # 'npm ci' is preferred over 'npm install' in CI environments for consistency
 
+      - name: Setup test database
+        run: |
+          rm -f ./test.db # Delete existing test database file
+
       - name: Run tests # Executes your test command
         run: npm test # Assumes you have a 'test' script defined in your package.json
         env:
