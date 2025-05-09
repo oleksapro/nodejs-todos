@@ -10,6 +10,9 @@ describe("users: register", () => {
   afterEach(async () => {
     await clearUsers();
   });
+  afterAll(async () => {
+    await clearUsers();
+  });
 
   it("should register a new user", async () => {
     // Arrange
