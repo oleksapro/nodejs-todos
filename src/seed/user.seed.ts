@@ -7,7 +7,7 @@ import { config } from "../config.ts";
 export const seededUser: UserSensitive = {
   id: 1,
   email: "user@email.com",
-  password: "abcd",
+  password: "abcdefgh1234",
 };
 
 export async function seedUsers() {
