@@ -1,4 +1,4 @@
-import { sharedTasksController } from "../controllers/shared-tasks.controller.ts";
+import { sharedTasksController } from "../controllers/shared-task.controller.ts";
 import { HTTP_METHODS } from "../modules/router/const.ts";
 import type { Route } from "../modules/router/types.ts";
 

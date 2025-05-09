@@ -10,6 +10,7 @@ import type {
   CreateTaskPayload,
   UpdateTaskPayload,
 } from "../repositories/task.repository.ts";
+import { createTaskSchema, updateTaskSchema } from "../schemas/task.schema.ts";
 import { handleError, ResError } from "../utils/http.ts";
 
 export type TaskDto = Omit<Task, "userId" | "completed"> & {
@@ -81,8 +82,20 @@ const createTask = (
   res: ResponseMod,
   { body }: RequestContext,
 ) => {
+  const validationResult = createTaskSchema.safeParse(body);
+
+  if (!validationResult.success) {
+    return handleError(
+      res,
+      new ResError({
+        cause: "validation",
+        errors: validationResult.error.issues,
+      }),
+    );
+  }
+
   const userId = req.context.user?.id as string;
-  const payload = body as CreateTaskPayload;
+  const payload = validationResult.data;
 
   repository.createTask(userId, payload, (err, task) => {
     if (err) {
@@ -105,7 +118,19 @@ const updateTask = (
   res: ResponseMod,
   { params, body }: RequestContext,
 ) => {
-  const payload = body as UpdateTaskPayload;
+  const validationResult = updateTaskSchema.safeParse(body);
+
+  if (!validationResult.success) {
+    return handleError(
+      res,
+      new ResError({
+        cause: "validation",
+        errors: validationResult.error.issues,
+      }),
+    );
+  }
+
+  const payload = validationResult.data;
 
   repository.getTask(params.id, (err, task) => {
     if (err) {

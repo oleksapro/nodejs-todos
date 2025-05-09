@@ -3,12 +3,12 @@ import type { IncomingMessage } from "node:http";
 import { HTTP_STATUS, type RequestContext } from "../modules/router/index.ts";
 import { type ResponseMod } from "../modules/router/index.ts";
 import * as repository from "../repositories/shared-task.repository.ts";
-import type {
-  CreateTaskPayload,
-  UpdateTaskPayload,
-} from "../repositories/shared-task.repository.ts";
 import { handleError, ResError } from "../utils/http.ts";
 import type { SharedTask } from "../entities/shared-task.ts";
+import {
+  createTaskSchema,
+  updateTaskSchema,
+} from "../schemas/shared-task.schema.ts";
 
 export type SharedTaskDto = Omit<SharedTask, "completed"> & {
   completed?: boolean;
@@ -59,7 +59,19 @@ const createTask = (
   res: ResponseMod,
   { body }: RequestContext,
 ) => {
-  const payload = body as CreateTaskPayload;
+  const validationResult = createTaskSchema.safeParse(body);
+
+  if (!validationResult.success) {
+    return handleError(
+      res,
+      new ResError({
+        cause: "validation",
+        errors: validationResult.error.issues,
+      }),
+    );
+  }
+
+  const payload = validationResult.data;
 
   repository.createTask(payload, (err, task) => {
     if (err) {
@@ -82,7 +94,19 @@ const updateTask = (
   res: ResponseMod,
   { params, body }: RequestContext,
 ) => {
-  const payload = body as UpdateTaskPayload;
+  const validationResult = updateTaskSchema.safeParse(body);
+
+  if (!validationResult.success) {
+    return handleError(
+      res,
+      new ResError({
+        cause: "validation",
+        errors: validationResult.error.issues,
+      }),
+    );
+  }
+
+  const payload = validationResult.data;
 
   repository.updateTask(params.id, payload, (err, task) => {
     if (err) {

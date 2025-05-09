@@ -7,7 +7,7 @@ import type { IHasMessage } from "../../utils/http.ts";
 import { clearUsers, seedUsers } from "../../seed/users.seed.ts";
 import { signInUser } from "../helpers.ts";
 import type { CreateTaskPayload } from "../../repositories/task.repository.ts";
-import type { CreateTaskResponse } from "../../controllers/tasks.controller.ts";
+import type { CreateTaskResponse } from "../../controllers/task.controller.ts";
 
 describe("tasks: create", () => {
   beforeAll(async () => {

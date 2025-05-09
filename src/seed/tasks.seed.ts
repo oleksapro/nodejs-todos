@@ -1,4 +1,4 @@
-import type { TaskDto } from "../controllers/tasks.controller.ts";
+import type { TaskDto } from "../controllers/task.controller.ts";
 import { db, dbAsync, TABLES } from "../db.ts";
 import { seededUser } from "./users.seed.ts";
 

@@ -1,4 +1,4 @@
-import type { SharedTaskDto } from "../controllers/shared-tasks.controller.ts";
+import type { SharedTaskDto } from "../controllers/shared-task.controller.ts";
 import { db, dbAsync, TABLES } from "../db.ts";
 
 export const seededSharedTasks: SharedTaskDto[] = [

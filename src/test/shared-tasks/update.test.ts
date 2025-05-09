@@ -5,7 +5,7 @@ import {
   clearSharedTasks,
   seedSharedTasks,
 } from "../../seed/shared-tasks.seed.ts";
-import type { SharedTaskDto } from "../../controllers/shared-tasks.controller.ts";
+import type { SharedTaskDto } from "../../controllers/shared-task.controller.ts";
 
 describe("shared-tasks: update", () => {
   afterEach(async () => {

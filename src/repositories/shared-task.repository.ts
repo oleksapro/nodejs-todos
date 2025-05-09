@@ -1,5 +1,9 @@
 import { db, TABLES } from "../db.ts";
 import type { SharedTask } from "../entities/shared-task.ts";
+import type {
+  CreateTaskPayload,
+  UpdateTaskPayload,
+} from "../schemas/shared-task.schema.ts";
 import { ResError } from "../utils/http.ts";
 
 export const getTasks = (
@@ -18,11 +22,6 @@ export const getTask = (
     callback,
   );
 };
-
-export type CreateTaskPayload = Pick<
-  SharedTask,
-  "title" | "description" | "completed"
->;
 
 export const createTask = (
   payload: CreateTaskPayload,
@@ -47,10 +46,6 @@ export const createTask = (
     },
   );
 };
-
-export type UpdateTaskPayload = Partial<
-  Pick<SharedTask, "title" | "description" | "completed">
->;
 
 export const updateTask = (
   id: string,

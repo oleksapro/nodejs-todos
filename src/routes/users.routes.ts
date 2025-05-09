@@ -1,4 +1,4 @@
-import { register, signIn } from "../controllers/users.controller.ts";
+import { register, signIn } from "../controllers/user.controller.ts";
 import { HTTP_METHODS } from "../modules/router/const.ts";
 import type { Route } from "../modules/router/types.ts";
 

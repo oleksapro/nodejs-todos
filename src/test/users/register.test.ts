@@ -2,7 +2,7 @@ import request from "supertest";
 
 import { server } from "../../server.ts";
 import { clearUsers, seededUser } from "../../seed/users.seed.ts";
-import type { RegisterResponse } from "../../controllers/users.controller.ts";
+import type { RegisterResponse } from "../../controllers/user.controller.ts";
 import { HTTP_STATUS } from "../../modules/router/const.ts";
 import type { RegisterPayload } from "../../schemas/user.schema.ts";
 

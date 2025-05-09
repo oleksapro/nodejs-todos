@@ -8,7 +8,7 @@ import {
 } from "../modules/router/types.ts";
 import { HTTP_STATUS } from "../modules/router/const.ts";
 import { config } from "../config.ts";
-import type { JwtType } from "../controllers/users.controller.ts";
+import type { JwtType } from "../controllers/user.controller.ts";
 import type { IHasMessage } from "../utils/http.ts";
 
 export const authMiddleware =

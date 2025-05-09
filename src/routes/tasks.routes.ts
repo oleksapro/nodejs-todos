@@ -1,4 +1,4 @@
-import { tasksController } from "../controllers/tasks.controller.ts";
+import { tasksController } from "../controllers/task.controller.ts";
 import { authMiddleware } from "../middlewares/auth.ts";
 import { HTTP_METHODS } from "../modules/router/const.ts";
 import type { Route } from "../modules/router/types.ts";
