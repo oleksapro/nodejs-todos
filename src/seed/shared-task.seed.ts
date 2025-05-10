@@ -26,7 +26,7 @@ export async function seedSharedTasks() {
     ],
   );
 
-  dbAsync.run(
+  await dbAsync.run(
     `INSERT INTO ${TABLES.SHARED_TASKS} (title, description, completed) VALUES (?, ?, ?)`,
     [
       seededSharedTasks[1].title,
@@ -37,5 +37,5 @@ export async function seedSharedTasks() {
 }
 
 export async function clearSharedTasks() {
-  db.run(`DELETE FROM ${TABLES.SHARED_TASKS}`);
+  await dbAsync.run(`DELETE FROM ${TABLES.SHARED_TASKS}`);
 }
