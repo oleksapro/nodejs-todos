@@ -40,5 +40,5 @@ export async function seedTasks() {
 }
 
 export async function clearTasks() {
-  db.run(`DELETE FROM ${TABLES.TASKS}`);
+  await dbAsync.run(`DELETE FROM ${TABLES.TASKS}`);
 }

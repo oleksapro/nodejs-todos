@@ -1,16 +1,8 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { clearSharedTasks } from "../../seed/shared-task.seed.ts";
 
-describe.skip("shared-tasks: create", () => {
-  afterEach(async () => {
-    clearSharedTasks();
-  });
-  afterAll(() => {
-    clearSharedTasks();
-  });
-
+describe("shared-tasks: create", () => {
   it("should create a new task", async () => {
     // Act
     const response = await request(server).post("/shared-tasks").send({
@@ -23,7 +15,7 @@ describe.skip("shared-tasks: create", () => {
     expect(response.status).toBe(201);
     expect(response.body).toEqual({
       task: {
-        id: 1,
+        id: expect.any(Number),
         title: "Learn Node.js",
         description: "Build a CRUD API",
         completed: false,
