@@ -3,8 +3,6 @@ name: Node.js CI
 on:
   push:
     branches: [main, develop] # Triggers on push to main or develop branches
-  pull_request:
-    branches: [main, develop] # Triggers on pull requests targeting main or develop
 
 jobs:
   build:
