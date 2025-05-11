@@ -8,18 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest # Specifies the operating system for the runner
 
-    strategy:
-      matrix:
-        node-version: [20.x, 22.x] # Test with different Node.js versions
-
     steps:
       - name: Checkout repository # Clones your repository
         uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }} # Sets up the specified Node.js version
+      - name: Use Node.js Latest # Sets up the latest stable Node.js version
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "latest" # Use 'latest' to get the latest stable version
           cache: "npm" # Caches node_modules for faster subsequent runs
 
       - name: Install dependencies # Installs your project's dependencies

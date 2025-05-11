@@ -1,7 +1,6 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { seededSharedTasks } from "../../seed/shared-task.seed.ts";
 
 describe("shared-tasks: get one", () => {
   it("should return not found", async () => {
