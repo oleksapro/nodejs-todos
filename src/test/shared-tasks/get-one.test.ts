@@ -24,7 +24,7 @@ describe("shared-tasks: get one", () => {
     // Assert
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
-      task: seededSharedTasks[0],
+      task: tasks[0],
     });
   });
 });
