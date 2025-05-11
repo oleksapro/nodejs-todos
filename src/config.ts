@@ -7,6 +7,8 @@ if (!env) throw Error("Set NODE_ENV variable.");
 
 dotenv.config({ path: `.env.${env}` });
 
+console.log(process.env.DATABASE_URL);
+
 export const config = {
   server: {
     timeout: 30 * 1000, // 30s
