@@ -2,28 +2,31 @@ name: Node.js CI
 
 on:
   push:
-    branches: [main, develop] # Triggers on push to main or develop branches
+    branches: [main, develop]
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Specifies the operating system for the runner
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository # Clones your repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Use Node.js # Sets up the Node.js
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24.0.1" # Use Node.js version
-          cache: "npm" # Caches node_modules for faster subsequent runs
+          node-version: "24.0.1"
+          cache: "npm"
 
-      - name: Install dependencies # Installs your project's dependencies
-        run: npm ci # 'npm ci' is preferred over 'npm install' in CI environments for consistency
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Run tests # Executes your test command
-        run: npm test # Assumes you have a 'test' script defined in your package.json
+      - name: Run types check
+        run: npm run types
+
+      - name: Run tests
+        run: npm test
         env:
-          NODE_ENV: test # Set NODE_ENV to 'test' for your tests
+          NODE_ENV: test
           JWT_SECRET: 123
           DATABASE_URL: ":memory:"
