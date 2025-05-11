@@ -7,10 +7,10 @@
   "license": "ISC",
   "description": "",
   "engines": {
-    "node": "23"
+    "node": "24"
   },
   "volta": {
-    "node": "23.10.0"
+    "node": "24.0.1"
   },
   "scripts": {
     "prod": "NODE_ENV=production node ./src/server.ts",

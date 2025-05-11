@@ -1,23 +1,15 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { clearUsers, seededUser, seedUsers } from "../../seed/user.seed.ts";
+import { seededUser, seedUsers } from "../../seed/user.seed.ts";
 import type { SignInResponse } from "../../controllers/user.controller.ts";
 import { HTTP_STATUS } from "../../modules/router/const.ts";
 import type { IHasMessage } from "../../utils/http.ts";
 import type { SignInPayload } from "../../schemas/user.schema.ts";
 
 describe("users: sign in", () => {
-  afterEach(async () => {
-    await clearUsers();
-  });
-  afterAll(async () => {
-    await clearUsers();
-  });
-
   it("should sign in a user", async () => {
     // Arrange
-    await seedUsers();
     const payload: SignInPayload = {
       email: seededUser.email,
       password: seededUser.password,
@@ -36,7 +28,6 @@ describe("users: sign in", () => {
 
   it("should reject sign in with wrong password", async () => {
     // Arrange
-    await seedUsers();
     const payload: SignInPayload = {
       email: seededUser.email,
       password: "wrong_password", // Incorrect password

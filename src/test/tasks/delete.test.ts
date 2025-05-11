@@ -1,32 +1,21 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { clearTasks, seedTasks } from "../../seed/task.seed.ts";
 import { signInUser } from "../helpers.ts";
-import { clearUsers, seedUsers } from "../../seed/user.seed.ts";
 
-describe.skip("tasks: delete", () => {
-  beforeAll(async () => {
-    await seedUsers();
-  });
-
-  afterEach(async () => {
-    await clearTasks();
-  });
-
-  afterAll(async () => {
-    await clearUsers();
-    await clearTasks();
-  });
-
+describe("tasks: delete", () => {
   it("should delete the task", async () => {
     // Arrange
-    await seedTasks();
     const { token } = await signInUser();
+    const {
+      body: { tasks },
+    } = await request(server)
+      .get("/tasks")
+      .set("Authorization", `Bearer ${token}`);
 
     // Act
     const response = await request(server)
-      .delete("/tasks/1")
+      .delete(`/tasks/${tasks[0].id}`)
       .set("Authorization", `Bearer ${token}`);
 
     // Assert
@@ -36,7 +25,7 @@ describe.skip("tasks: delete", () => {
     });
 
     const responseNotFound = await request(server)
-      .get("/tasks/1")
+      .get(`/tasks/${tasks[0].id}`)
       .set("Authorization", `Bearer ${token}`);
 
     expect(responseNotFound.status).toBe(404);
@@ -51,7 +40,7 @@ describe.skip("tasks: delete", () => {
 
     // Act
     const response = await request(server)
-      .delete("/tasks/1")
+      .delete("/tasks/0")
       .set("Authorization", `Bearer ${token}`);
 
     expect(response.status).toBe(404);

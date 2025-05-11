@@ -1,27 +1,32 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import type { SharedTaskDto } from "../../controllers/shared-task.controller.ts";
+import type { TaskDto } from "../../controllers/task.controller.ts";
+import { signInUser } from "../helpers.ts";
 
-describe("shared-tasks: update", () => {
+describe("tasks: update", () => {
   it("should update a task", async () => {
     // Arrange
+    const { token } = await signInUser();
     const {
       body: { tasks },
-    } = await request(server).get("/shared-tasks");
-    const updatedTaskFields: Omit<SharedTaskDto, "id"> = {
+    } = await request(server)
+      .get("/tasks")
+      .set("Authorization", `Bearer ${token}`);
+    const updatedTaskFields: Omit<TaskDto, "id"> = {
       title: "Learn Node.js",
       description: "Build a CRUD API",
       completed: false,
     };
-    const updatedTask: SharedTaskDto = {
+    const updatedTask: TaskDto = {
       ...tasks[0],
       ...updatedTaskFields,
     };
 
     // Act
     const response = await request(server)
-      .patch(`/shared-tasks/${tasks[0].id}`)
+      .patch(`/tasks/${tasks[0].id}`)
+      .set("Authorization", `Bearer ${token}`)
       .send(updatedTaskFields);
 
     // Assert
