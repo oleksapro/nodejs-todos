@@ -4,8 +4,13 @@ import { server } from "../../server.ts";
 
 describe("shared-tasks: delete", () => {
   it("should delete the shared task", async () => {
+    // Arrange
+    const { body } = await request(server).get("/shared-tasks");
+
     // Act
-    const response = await request(server).delete("/shared-tasks/1");
+    const response = await request(server).delete(
+      `/shared-tasks/${body.tasks[0].id}`,
+    );
 
     // Assert
     expect(response.status).toBe(200);
