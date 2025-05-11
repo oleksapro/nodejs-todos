@@ -12,10 +12,10 @@ jobs:
       - name: Checkout repository # Clones your repository
         uses: actions/checkout@v4
 
-      - name: Use Node.js Latest # Sets up the latest stable Node.js version
+      - name: Use Node.js # Sets up the Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "latest" # Use 'latest' to get the latest stable version
+          node-version: "24.0.1" # Use Node.js version
           cache: "npm" # Caches node_modules for faster subsequent runs
 
       - name: Install dependencies # Installs your project's dependencies
