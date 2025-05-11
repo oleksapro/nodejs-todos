@@ -1,28 +1,13 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import { clearTasks } from "../../seed/task.seed.ts";
 import { HTTP_STATUS } from "../../modules/router/const.ts";
 import type { IHasMessage } from "../../utils/http.ts";
-import { clearUsers, seedUsers } from "../../seed/user.seed.ts";
 import { signInUser } from "../helpers.ts";
 import type { CreateTaskPayload } from "../../repositories/task.repository.ts";
 import type { CreateTaskResponse } from "../../controllers/task.controller.ts";
 
-describe.skip("tasks: create", () => {
-  beforeAll(async () => {
-    await seedUsers();
-  });
-
-  afterEach(async () => {
-    await clearTasks();
-  });
-
-  afterAll(async () => {
-    await clearUsers();
-    await clearTasks();
-  });
-
+describe("tasks: create", () => {
   it("should reject unauthorized request", async () => {
     const expectedResponse: IHasMessage = {
       message: "Unauthorized",
@@ -50,7 +35,7 @@ describe.skip("tasks: create", () => {
     };
     const expectedResponse: CreateTaskResponse = {
       task: {
-        id: 1,
+        id: expect.any(Number),
         title: "Learn Node.js",
         description: "Build a CRUD API",
         completed: false,
