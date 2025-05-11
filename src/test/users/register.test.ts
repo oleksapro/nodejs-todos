@@ -6,21 +6,17 @@ import type { RegisterResponse } from "../../controllers/user.controller.ts";
 import { HTTP_STATUS } from "../../modules/router/const.ts";
 import type { RegisterPayload } from "../../schemas/user.schema.ts";
 
-describe.skip("users: register", () => {
-  afterAll(async () => {
-    await clearUsers();
-  });
-
+describe("users: register", () => {
   it("should register a new user", async () => {
     // Arrange
     const payload: RegisterPayload = {
-      email: seededUser.email,
-      password: seededUser.password,
+      email: "testUser@mail.com",
+      password: "abcdefgh1234",
     };
     const expectedResponse: RegisterResponse = {
       user: {
         email: payload.email,
-        id: seededUser.id,
+        id: expect.any(Number),
       },
     };
 
