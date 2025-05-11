@@ -1,16 +1,23 @@
 import { IncomingMessage } from "node:http";
 
-import type { Route, ResponseMod, RequestMod } from "./types.ts";
+import type { Route, ResponseMod, RequestMod, RequestBody } from "./types.ts";
 import { matchPath } from "./utils/matchPath.ts";
 import { handleError, ResError } from "../../utils/http.ts";
 
-const parseBody = (req: IncomingMessage, callback: (body: any) => void) => {
+const parseBody = (
+  req: IncomingMessage,
+  callback: (error: unknown | undefined, body: RequestBody | undefined) => void,
+) => {
   let body = "";
   req.on("data", (chunk) => {
     body += chunk.toString();
   });
   req.on("end", () => {
-    callback(JSON.parse(body));
+    try {
+      callback(undefined, JSON.parse(body));
+    } catch (error) {
+      callback(error, {});
+    }
   });
 };
 
@@ -26,9 +33,17 @@ export const router = (routes: Route[]) => {
 
       if (match && sameMethod) {
         if (["POST", "PATCH"].includes(route.method)) {
-          parseBody(req, (body) => {
-            route.handler(req, res, { params, queryParams, body });
-          });
+          try {
+            parseBody(req, (err, body) => {
+              if (err) {
+                return handleError(res, err);
+              }
+
+              route.handler(req, res, { params, queryParams, body });
+            });
+          } catch (error) {
+            handleError(res, error);
+          }
 
           return;
         }

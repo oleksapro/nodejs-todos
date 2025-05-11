@@ -2,8 +2,8 @@ import { z } from "zod";
 
 export const createTaskSchema = z.object({
   title: z.string().trim().max(250),
-  description: z.string().trim().max(1000),
-  completed: z.boolean(),
+  description: z.string().trim().max(1000).optional(),
+  completed: z.boolean().optional(),
 });
 
 export type CreateTaskPayload = z.infer<typeof createTaskSchema>;

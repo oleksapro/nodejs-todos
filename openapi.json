@@ -579,7 +579,7 @@
           },
           "password": {
             "type": "string",
-            "example": "abcd",
+            "example": "abcdefgh1234",
             "nullable": true
           }
         }
@@ -593,7 +593,7 @@
           },
           "password": {
             "type": "string",
-            "example": "abcd",
+            "example": "abcdefgh1234",
             "nullable": true
           }
         }

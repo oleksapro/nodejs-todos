@@ -28,8 +28,8 @@ export const createTask = (
   callback: (err: Error | null, task?: SharedTask) => void,
 ) => {
   db.run(
-    `INSERT INTO ${TABLES.SHARED_TASKS} (title, description) VALUES (?, ?)`,
-    [payload.title, payload.description],
+    `INSERT INTO ${TABLES.SHARED_TASKS} (title, description, completed) VALUES (?, ?, ?)`,
+    [payload.title, payload.description, payload.completed],
     async function (err) {
       if (err) {
         callback(err);
