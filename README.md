@@ -54,7 +54,3 @@ docker run -p 3000:3000 nodejs-todos:latest
 ```
 
 After server started open [/swagger-ui ](http://localhost:3000/swagger-ui)
-
-## Todo
-
-- Add pipeline with type checking and test running
