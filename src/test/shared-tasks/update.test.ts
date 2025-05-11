@@ -3,7 +3,7 @@ import request from "supertest";
 import { server } from "../../server.ts";
 import type { SharedTaskDto } from "../../controllers/shared-task.controller.ts";
 
-describe.only("shared-tasks: update", () => {
+describe("shared-tasks: update", () => {
   it("should update a task", async () => {
     // Arrange
     const {

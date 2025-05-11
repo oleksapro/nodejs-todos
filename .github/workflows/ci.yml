@@ -26,3 +26,4 @@ jobs:
         env:
           NODE_ENV: test # Set NODE_ENV to 'test' for your tests
           JWT_SECRET: 123
+          DATABASE_URL: ":memory:"
