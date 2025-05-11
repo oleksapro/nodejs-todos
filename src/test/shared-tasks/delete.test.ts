@@ -1,23 +1,9 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import {
-  clearSharedTasks,
-  seedSharedTasks,
-} from "../../seed/shared-task.seed.ts";
 
-describe.skip("shared-tasks: delete", () => {
-  afterEach(async () => {
-    clearSharedTasks();
-  });
-  afterAll(() => {
-    clearSharedTasks();
-  });
-
+describe("shared-tasks: delete", () => {
   it("should delete the shared task", async () => {
-    // Arrange
-    await seedSharedTasks();
-
     // Act
     const response = await request(server).delete("/shared-tasks/1");
 
