@@ -1,37 +1,27 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import {
-  clearSharedTasks,
-  seedSharedTasks,
-} from "../../seed/shared-task.seed.ts";
 import type { SharedTaskDto } from "../../controllers/shared-task.controller.ts";
 
-describe.skip("shared-tasks: update", () => {
-  afterEach(async () => {
-    clearSharedTasks();
-  });
-  afterAll(() => {
-    clearSharedTasks();
-  });
-
+describe("shared-tasks: update", () => {
   it("should update a task", async () => {
     // Arrange
-    await seedSharedTasks();
-
+    const {
+      body: { tasks },
+    } = await request(server).get("/shared-tasks");
     const updatedTaskFields: Omit<SharedTaskDto, "id"> = {
       title: "Learn Node.js",
       description: "Build a CRUD API",
       completed: false,
     };
     const updatedTask: SharedTaskDto = {
+      ...tasks[0],
       ...updatedTaskFields,
-      id: 1,
     };
 
     // Act
     const response = await request(server)
-      .patch("/shared-tasks/1")
+      .patch(`/shared-tasks/${tasks[0].id}`)
       .send(updatedTaskFields);
 
     // Assert

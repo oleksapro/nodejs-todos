@@ -1,23 +1,12 @@
 import request from "supertest";
 
 import { server } from "../../server.ts";
-import {
-  clearSharedTasks,
-  seededSharedTasks,
-  seedSharedTasks,
-} from "../../seed/shared-task.seed.ts";
+import { seededSharedTasks } from "../../seed/shared-task.seed.ts";
 
-describe.skip("shared-tasks: get one", () => {
-  afterEach(async () => {
-    clearSharedTasks();
-  });
-  afterAll(() => {
-    clearSharedTasks();
-  });
-
+describe("shared-tasks: get one", () => {
   it("should return not found", async () => {
     // Act
-    const response = await request(server).get("/shared-tasks/1");
+    const response = await request(server).get(`/shared-tasks/0`);
 
     // Assert
     expect(response.status).toBe(404);
@@ -25,10 +14,12 @@ describe.skip("shared-tasks: get one", () => {
 
   it("should return the shared task", async () => {
     // Arrange
-    await seedSharedTasks();
+    const {
+      body: { tasks },
+    } = await request(server).get("/shared-tasks");
 
     // Act
-    const response = await request(server).get("/shared-tasks/1");
+    const response = await request(server).get(`/shared-tasks/${tasks[0].id}`);
 
     // Assert
     expect(response.status).toBe(200);
